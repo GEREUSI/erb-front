@@ -42,7 +42,17 @@ legend {
     border: 2px solid rgb(29, 124, 72);
     background-color: rgb(29, 124, 72);
 }
-    
+
+.error {
+    color: rgb(173, 0, 29);
+    margin: 0px;
+    padding: 0px;
+}
+
+.error-container {
+    padding: 2px 0px 0px 10px;
+    margin: 4px 0px 0px 0px;
+}
 
 div {
     margin: 10px;

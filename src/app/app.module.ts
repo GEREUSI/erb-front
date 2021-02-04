@@ -11,6 +11,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './body';
 import { SignupComponent } from './body/signup/signup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,8 @@ import { SignupComponent } from './body/signup/signup.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
     StoreModule.forRoot({}, {}),
   ],
   providers: [],
