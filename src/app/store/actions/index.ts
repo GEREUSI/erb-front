@@ -1,1 +1,1 @@
-// export * from 'path';
+export * from './routing.actions';

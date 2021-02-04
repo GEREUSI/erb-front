@@ -1,5 +1,6 @@
 export enum ROUTES {
     Home = 'home',
     HomeRedirect = '/home',
-    SignUp = 'signup',
+    SignUp = 'sign-up',
+    SignIn = 'sign-in',
 }

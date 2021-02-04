@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ROUTES } from '../constants/routes.const';
+import { go } from '../store/actions';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  constructor() { }
+  constructor(private store: Store<{}>) { }
 
-  ngOnInit(): void {
+  public goToHome(): void {
+    this.store.dispatch(go({ path: ROUTES.Home }));
+  }
+
+  public goToSignIn(): void {
+    this.store.dispatch(go({ path: ROUTES.SignIn }));
+  }
+
+  public goToSignUp(): void {
+    this.store.dispatch(go({ path: ROUTES.SignUp }));
   }
 
 }
