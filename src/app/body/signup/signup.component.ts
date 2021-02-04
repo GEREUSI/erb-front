@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SignUp } from 'src/app/model/signup'
+import { SignUp } from 'src/app/models/signup'
 
 @Component({
   selector: 'app-signup',
@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
     if(!this.signUpForm.valid)
       return;
       
-    alert(JSON.stringify(this.signUp))
+    alert(JSON.stringify(this.signUpForm.getRawValue()))
   }
 
 }
