@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SignUp } from 'src/app/models/signup'
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -10,38 +9,35 @@ import { SignUp } from 'src/app/models/signup'
 export class SignupComponent implements OnInit {
 
 
-  signUpForm : FormGroup = new FormGroup({});
+  public signUpForm: FormGroup;
 
-  signUp: SignUp = {
-    username: '',
-    password: '',
-    email: '',
-  };
+  constructor(private formBuilder: FormBuilder) {
+    this.signUpForm = formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
+      email: ['', [Validators.required, Validators.email]],
+    });
+   }
 
-  hasErrors(controlName: string) : boolean {
-    let control = this.signUpForm.controls[controlName];
+  ngOnInit(): void {
+
+  }
+
+  hasErrors(controlName: string): boolean {
+    const control = this.signUpForm.controls[controlName];
     return control.invalid && (control.dirty || control.touched);
   }
 
-  getErrors(controlName: string) {
+  getErrors(controlName: string): ValidationErrors {
     return this.signUpForm.controls[controlName].errors ?? {};
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
-    this.signUpForm = new FormGroup({
-      username: new FormControl(this.signUp.username, [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
-      password: new FormControl(this.signUp.password, [Validators.required, Validators.minLength(6), Validators.maxLength(32)]),
-      email: new FormControl(this.signUp.email, [Validators.required, Validators.email]),
-    });
-  }
-
   onSubmit(): void {
-    if(!this.signUpForm.valid)
+    if (!this.signUpForm.valid) {
       return;
-      
-    alert(JSON.stringify(this.signUpForm.getRawValue()))
+    }
+
+    alert(JSON.stringify(this.signUpForm.getRawValue()));
   }
 
 }
