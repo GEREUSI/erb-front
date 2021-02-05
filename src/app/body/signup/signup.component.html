@@ -1,0 +1,37 @@
+<div class='container'>
+    <form [formGroup]='signUpForm' (ngSubmit)='onSubmit()'>
+        <div class='centered-text'>Already have an account? <a href='/signin'>Sign in here</a></div>
+        <fieldset>
+            <legend>Create an account</legend>
+            <div>
+                <input class='inputrow' id='username' type='text' placeholder='Username' required
+                    formControlName='username' >
+                    <div class='error-container' *ngIf="hasErrors('username')">
+                        <div class='error' *ngIf="getErrors('username').required">Please enter your username.</div>
+                        <div class='error' *ngIf="getErrors('username').minlength">Username too short.</div>
+                        <div class='error' *ngIf="getErrors('username').maxlength">Username too long.</div>
+                    </div>
+            </div>
+            <div>
+                <input class='inputrow' id='password' type='password' placeholder='Password' required
+                    formControlName='password'>
+                    <div class='error-container' *ngIf="hasErrors('password')">
+                        <div class='error' *ngIf="getErrors('password').required">Please enter your password.</div>
+                        <div class='error' *ngIf="getErrors('password').minlength">Password too short.</div>
+                        <div class='error' *ngIf="getErrors('password').maxlength">Password too long.</div>
+                    </div>
+            </div>
+            <div>
+                <input class='inputrow' id='email' type='email' placeholder='Email' required
+                    formControlName='email'>
+                    <div class='error-container' *ngIf="hasErrors('email')">
+                        <div class='error' *ngIf="getErrors('email').required">Please enter your email.</div>
+                        <div class='error' *ngIf="getErrors('email').email">Email is invalid.</div>
+                    </div>
+            </div>
+            <div>
+                <button class='submit' id='submit' type='submit'>Sign Up</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

@@ -47,6 +47,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './body';
+import { SignupComponent } from './body/signup/signup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { effects } from './store/effects';
 
 const angularMaterialImports = [
@@ -93,12 +95,15 @@ const angularMaterialImports = [
     HeaderComponent,
     FooterComponent,
     HomeComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({
