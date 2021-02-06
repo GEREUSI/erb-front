@@ -4,31 +4,28 @@ import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { constructIsValid, constructIsInvalid, constructGetErrors } from '../../helper/form-validation-helper';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class SignUpComponent implements OnInit {
-
+export class SignInComponent implements OnInit {
 
   public routes = ROUTES;
-  public signUpForm: FormGroup;
+  public signInForm: FormGroup;
 
   public isValid: (controlName: string) => boolean;
   public isInvalid: (controlName: string) => boolean;
   public getErrors: (controlName: string) => ValidationErrors;
 
   constructor(private formBuilder: FormBuilder) {
-    this.signUpForm = formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
+    this.signInForm = formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
     });
 
-    this.isValid = constructIsValid(this.signUpForm);
-    this.isInvalid = constructIsInvalid(this.signUpForm);
-    this.getErrors = constructGetErrors(this.signUpForm);
-
+    this.isValid = constructIsValid(this.signInForm);
+    this.isInvalid = constructIsInvalid(this.signInForm);
+    this.getErrors = constructGetErrors(this.signInForm);
    }
 
   ngOnInit(): void {
@@ -36,10 +33,11 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.signUpForm.valid) {
+    if (!this.signInForm.valid) {
       return;
     }
 
-    alert(JSON.stringify(this.signUpForm.getRawValue()));
+    alert(JSON.stringify(this.signInForm.getRawValue()));
   }
+
 }
