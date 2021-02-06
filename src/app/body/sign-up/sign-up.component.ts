@@ -1,3 +1,4 @@
+import { ROUTES } from 'src/app/constants/routes.const';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
@@ -9,6 +10,7 @@ import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/f
 export class SignupComponent implements OnInit {
 
 
+  public routes = ROUTES;
   public signUpForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -23,7 +25,12 @@ export class SignupComponent implements OnInit {
 
   }
 
-  hasErrors(controlName: string): boolean {
+  isValid(controlName: string): boolean {
+    const control = this.signUpForm.controls[controlName];
+    return !control.invalid && (control.dirty || control.touched);
+  }
+
+  isInvalid(controlName: string): boolean {
     const control = this.signUpForm.controls[controlName];
     return control.invalid && (control.dirty || control.touched);
   }
