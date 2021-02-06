@@ -1,17 +1,22 @@
 import { ROUTES } from 'src/app/constants/routes.const';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { constructIsValid, constructIsInvalid, constructGetErrors } from 'src/app/helper/form-validation-helper';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
 
   public routes = ROUTES;
   public signUpForm: FormGroup;
+
+  isValid: (controlName: string) => boolean;
+  isInvalid: (controlName: string) => boolean;
+  getErrors: (controlName: string) => ValidationErrors;
 
   constructor(private formBuilder: FormBuilder) {
     this.signUpForm = formBuilder.group({
@@ -19,24 +24,15 @@ export class SignupComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
       email: ['', [Validators.required, Validators.email]],
     });
+
+    this.isValid = constructIsValid(this.signUpForm);
+    this.isInvalid = constructIsInvalid(this.signUpForm);
+    this.getErrors = constructGetErrors(this.signUpForm);
+
    }
 
   ngOnInit(): void {
 
-  }
-
-  isValid(controlName: string): boolean {
-    const control = this.signUpForm.controls[controlName];
-    return !control.invalid && (control.dirty || control.touched);
-  }
-
-  isInvalid(controlName: string): boolean {
-    const control = this.signUpForm.controls[controlName];
-    return control.invalid && (control.dirty || control.touched);
-  }
-
-  getErrors(controlName: string): ValidationErrors {
-    return this.signUpForm.controls[controlName].errors ?? {};
   }
 
   onSubmit(): void {
@@ -46,5 +42,4 @@ export class SignupComponent implements OnInit {
 
     alert(JSON.stringify(this.signUpForm.getRawValue()));
   }
-
 }
