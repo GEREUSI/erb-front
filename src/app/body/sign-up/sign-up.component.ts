@@ -2,15 +2,17 @@ import { ROUTES } from '../../constants/routes.const';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { constructIsValid, constructIsInvalid, constructGetErrors } from '../../helper/form-validation-helper';
+import { SignUpService } from 'src/app/services/sign-up.service';
+import { SignUpRequest, SignUpResponse } from 'src/app/models/sign-up';
+import { Store } from '@ngrx/store';
+import { go } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
-
-
   public routes = ROUTES;
   public signUpForm: FormGroup;
 
@@ -18,7 +20,7 @@ export class SignUpComponent implements OnInit {
   public isInvalid: (controlName: string) => boolean;
   public getErrors: (controlName: string) => ValidationErrors;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private signUpService: SignUpService, private store: Store<{}>) {
     this.signUpForm = formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
@@ -28,11 +30,12 @@ export class SignUpComponent implements OnInit {
     this.isValid = constructIsValid(this.signUpForm);
     this.isInvalid = constructIsInvalid(this.signUpForm);
     this.getErrors = constructGetErrors(this.signUpForm);
+  }
 
-   }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-
+  public goToHome(): void {
+    this.store.dispatch(go({ path: ROUTES.Home }));
   }
 
   onSubmit(): void {
@@ -40,6 +43,13 @@ export class SignUpComponent implements OnInit {
       return;
     }
 
-    alert(JSON.stringify(this.signUpForm.getRawValue()));
+    this.signUpService.signUp(this.signUpForm.getRawValue() as SignUpRequest).subscribe(
+      (data: SignUpResponse) => {
+        this.goToHome();
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 }
