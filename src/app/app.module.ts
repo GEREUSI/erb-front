@@ -47,9 +47,10 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './body';
-import { SignupComponent } from './body/sign-up/sign-up.component';
+import { SignUpComponent } from './body/sign-up/sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { effects } from './store/effects';
+import { SignInComponent } from './body/sign-in/sign-in.component';
 
 const angularMaterialImports = [
   MatAutocompleteModule,
@@ -95,7 +96,8 @@ const angularMaterialImports = [
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    SignupComponent
+    SignUpComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
