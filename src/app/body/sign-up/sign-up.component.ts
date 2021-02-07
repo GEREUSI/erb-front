@@ -1,7 +1,6 @@
 import { ROUTES } from '../../constants/routes.const';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { constructIsValid, constructIsInvalid, constructGetErrors } from '../../helper/form-validation-helper';
 import { SignUpService } from 'src/app/services/sign-up.service';
 import { SignUpRequest, SignUpResponse } from 'src/app/models/sign-up';
 import { Store } from '@ngrx/store';
@@ -16,23 +15,15 @@ export class SignUpComponent implements OnInit {
   public routes = ROUTES;
   public signUpForm: FormGroup;
 
-  public isValid: (controlName: string) => boolean;
-  public isInvalid: (controlName: string) => boolean;
-  public getErrors: (controlName: string) => ValidationErrors;
-
   constructor(private formBuilder: FormBuilder, private signUpService: SignUpService, private store: Store<{}>) {
     this.signUpForm = formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
       email: ['', [Validators.required, Validators.email]],
-    });
+    }, {updateOn: 'blur'});
+   }
 
-    this.isValid = constructIsValid(this.signUpForm);
-    this.isInvalid = constructIsInvalid(this.signUpForm);
-    this.getErrors = constructGetErrors(this.signUpForm);
-  }
-
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public goToHome(): void {
     this.store.dispatch(go({ path: ROUTES.Home }));

@@ -6,20 +6,11 @@
                 <fieldset>
                     <legend class='border-bottom border-top p-3'>Sign in</legend>
                     <div class='mb-3'>
-                        <input class='form-control'
-                            [ngClass]=' { "is-valid": isValid("email"), "is-invalid": isInvalid("email")}' id='email'
-                            type='email' placeholder='Email' required formControlName='email'>
-                        <div *ngIf='getErrors("email").required' class='invalid-feedback'>Please enter your email.</div>
-                        <div *ngIf='getErrors("email").email' class='invalid-feedback'>Email is invalid.</div>
+                        <input class='form-control' id='email' type='email' placeholder='Email' required formControlName='email'>
                     </div>
                     <div class='mb-3'>
                         <input class='form-control'
-                            [ngClass]=' { "is-valid": isValid("password"), "is-invalid": isInvalid("password")}'
                             id='password' type='password' placeholder='Password' required formControlName='password'>
-                        <div *ngIf='getErrors("password").required' class='invalid-feedback'>Please enter your password.
-                        </div>
-                        <div *ngIf='getErrors("password").minlength' class='invalid-feedback'>Password too short.</div>
-                        <div *ngIf='getErrors("password").maxlength' class='invalid-feedback'>Password too long.</div>
                     </div>
                     <div>
                         <button class='mb-3 btn btn-success w-100' id='submit' type='submit'>Sign In</button>
