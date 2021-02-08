@@ -17,7 +17,15 @@
                         <input class='form-control' id='email' type='email' placeholder='Email' formControlName='email'>
                     </div>
                     <div>
-                        <button class='mb-3 btn btn-success w-100' id='submit' type='submit'>Sign Up</button>
+                        <button class='mb-3 btn btn-success w-100' id='submit' type='submit' [disabled]="isLoading$ | async">
+                            <div class="spinner-wrapper">
+                                <span>Sign Up </span>
+                                <mat-spinner *ngIf="isLoading$ | async" [diameter]="20"></mat-spinner>
+                            </div>
+                        </button>
+                    </div>
+                    <div *ngIf="hasErrors$ | async">
+                        {{errors$ | async}}
                     </div>
                 </fieldset>
             </form>

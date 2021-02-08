@@ -55,6 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormControlValidationDirective } from './directives/form-control-validation.directive';
 import { FormSubmitDirective } from './directives/form-submit.directive';
 import { ControlErrorComponent } from './components/control-error/control-error.component';
+import { reducers } from './store/reducers';
 
 const angularMaterialImports = [
   MatAutocompleteModule,
@@ -114,7 +115,7 @@ const angularMaterialImports = [
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(reducers),
     EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

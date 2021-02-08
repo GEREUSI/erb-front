@@ -11,10 +11,10 @@ import { SignInRequest, SignInResponse } from '../models/sign-in';
 export class SignInService {
   constructor(private http: HttpClient) {}
 
-  signUp(signUpData: SignInRequest): Observable<SignInResponse> {
+  signIn(signInData: SignInRequest): Observable<SignInResponse> {
     const url = `${API.Prefix}/${API.SignIn}`;
     const options = { headers: { 'Content-Type': 'application/json' } };
-    const body = JSON.stringify(signUpData);
+    const body = JSON.stringify(signInData);
 
     return this.http.post(url, body, options).pipe(map((data) => data as SignInResponse));
   }
