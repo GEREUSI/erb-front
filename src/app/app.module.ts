@@ -51,6 +51,7 @@ import { SignUpComponent } from './body/sign-up/sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { effects } from './store/effects';
 import { SignInComponent } from './body/sign-in/sign-in.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const angularMaterialImports = [
   MatAutocompleteModule,
@@ -101,6 +102,7 @@ const angularMaterialImports = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
