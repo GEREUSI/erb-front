@@ -52,6 +52,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { effects } from './store/effects';
 import { SignInComponent } from './body/sign-in/sign-in.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormControlValidationDirective } from './directives/form-control-validation.directive';
+import { FormSubmitDirective } from './directives/form-submit.directive';
+import { ControlErrorComponent } from './components/control-error/control-error.component';
 
 const angularMaterialImports = [
   MatAutocompleteModule,
@@ -98,7 +101,10 @@ const angularMaterialImports = [
     FooterComponent,
     HomeComponent,
     SignUpComponent,
-    SignInComponent
+    SignInComponent,
+    FormControlValidationDirective,
+    FormSubmitDirective,
+    ControlErrorComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,29 +6,15 @@
                 <fieldset>
                     <legend class='border-bottom border-top p-3'>Create an account</legend>
                     <div class='mb-3'>
-                        <input class='form-control'
-                            [ngClass]=' { "is-valid": isValid("username"), "is-invalid": isInvalid("username")}'
-                            id='username' type='text' placeholder='Username' required formControlName='username'>
-                        <div *ngIf='getErrors("username").required' class='invalid-feedback'>Please enter your username.
-                        </div>
-                        <div *ngIf='getErrors("username").minlength' class='invalid-feedback'>Username too short.</div>
-                        <div *ngIf='getErrors("username").maxlength' class='invalid-feedback'>Username too long.</div>
+                        <input class='form-control' id='username' type='text' placeholder='Username'
+                            formControlName='username'>
                     </div>
                     <div class='mb-3'>
-                        <input class='form-control'
-                            [ngClass]=' { "is-valid": isValid("password"), "is-invalid": isInvalid("password")}'
-                            id='password' type='password' placeholder='Password' required formControlName='password'>
-                        <div *ngIf='getErrors("password").required' class='invalid-feedback'>Please enter your password.
-                        </div>
-                        <div *ngIf='getErrors("password").minlength' class='invalid-feedback'>Password too short.</div>
-                        <div *ngIf='getErrors("password").maxlength' class='invalid-feedback'>Password too long.</div>
+                        <input class='form-control' id='password' type='password' placeholder='Password'
+                            formControlName='password'>
                     </div>
                     <div class='mb-3'>
-                        <input class='form-control'
-                            [ngClass]=' { "is-valid": isValid("email"), "is-invalid": isInvalid("email")}' id='email'
-                            type='email' placeholder='Email' required formControlName='email'>
-                        <div *ngIf='getErrors("email").required' class='invalid-feedback'>Please enter your email.</div>
-                        <div *ngIf='getErrors("email").email' class='invalid-feedback'>Email is invalid.</div>
+                        <input class='form-control' id='email' type='email' placeholder='Email' formControlName='email'>
                     </div>
                     <div>
                         <button class='mb-3 btn btn-success w-100' id='submit' type='submit'>Sign Up</button>
