@@ -8,8 +8,8 @@ import {
   ComponentRef,
   ViewContainerRef,
   ComponentFactoryResolver,
-  OnDestroy,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { NgControl, ValidationErrors } from '@angular/forms';
 import { FORM_ERRORS } from '../injectables/form-errors';
@@ -23,7 +23,7 @@ import { ControlErrorComponent } from '../components/control-error/control-error
   /* tslint:enable:directive-selector */
 })
 export class FormControlValidationDirective implements OnInit, OnDestroy {
-  controlErrorRef?: ComponentRef<ControlErrorComponent>;
+  controlErrorRef: ComponentRef<ControlErrorComponent>;
 
   constructor(
     private errorContainer: ViewContainerRef,
@@ -32,8 +32,6 @@ export class FormControlValidationDirective implements OnInit, OnDestroy {
     @Optional() @Host() private form: FormSubmitDirective,
     @Inject(FORM_ERRORS) private errorMessageFactories: any
   ) {}
-
-  ngOnDestroy(): void {}
 
   ngOnInit(): void {
     merge(this.form?.submit$ ?? EMPTY, this.control?.valueChanges ?? EMPTY)
@@ -50,7 +48,8 @@ export class FormControlValidationDirective implements OnInit, OnDestroy {
       this.controlErrorRef = this.constructControlErrorRef();
     }
 
-    this.controlErrorRef.instance.text = text;
+    this.controlErrorRef.instance.value = text;
+    this.controlErrorRef.instance.detectChanges();
   }
 
   createErrorMessage(errors: ValidationErrors): string {
@@ -63,4 +62,6 @@ export class FormControlValidationDirective implements OnInit, OnDestroy {
     const factory = this.resolver.resolveComponentFactory(ControlErrorComponent);
     return this.errorContainer.createComponent(factory);
   }
+
+  ngOnDestroy() {}
 }

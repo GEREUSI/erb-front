@@ -1,16 +1,15 @@
-import { Component, } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ROUTES } from '../constants/routes.const';
+import { ROUTES } from '../shared/constants/routes.const';
 import { go } from '../store/actions';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-
-  constructor(private store: Store<{}>) { }
+  constructor(private store: Store<{}>) {}
 
   public goToHome(): void {
     this.store.dispatch(go({ path: ROUTES.Home }));
@@ -23,5 +22,4 @@ export class HeaderComponent {
   public goToSignUp(): void {
     this.store.dispatch(go({ path: ROUTES.SignUp }));
   }
-
 }

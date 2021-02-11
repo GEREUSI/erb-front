@@ -9,10 +9,9 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FooterComponent ],
+      declarations: [FooterComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

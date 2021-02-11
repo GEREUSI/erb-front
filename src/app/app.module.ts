@@ -52,9 +52,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { effects } from './store/effects';
 import { SignInComponent } from './body/sign-in/sign-in.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormControlValidationDirective } from './directives/form-control-validation.directive';
-import { FormSubmitDirective } from './directives/form-submit.directive';
-import { ControlErrorComponent } from './components/control-error/control-error.component';
+import { FormControlValidationDirective } from './shared/directives/form-control-validation.directive';
+import { FormSubmitDirective } from './shared/directives/form-submit.directive';
+import { ControlErrorComponent } from './shared/components/control-error/control-error.component';
 import { reducers } from './store/reducers';
 
 const angularMaterialImports = [
@@ -122,10 +122,8 @@ const angularMaterialImports = [
     }),
     ...angularMaterialImports,
   ],
-  exports: [
-    ...angularMaterialImports,
-  ],
+  exports: [...angularMaterialImports],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

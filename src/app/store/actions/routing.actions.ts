@@ -1,12 +1,8 @@
-
 import { createAction, props } from '@ngrx/store';
-import { ROUTES } from 'src/app/constants/routes.const';
+import { ROUTES } from 'src/app/shared/constants/routes.const';
 
 export enum RoutingActions {
-    Go = '[Routing] Go',
+  Go = '[Routing] Go',
 }
 
-export const go = createAction(
-    RoutingActions.Go,
-    props<{ path: ROUTES; }>()
-);
+export const go = createAction(RoutingActions.Go, props<{ path: ROUTES }>());

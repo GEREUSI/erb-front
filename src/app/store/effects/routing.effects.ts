@@ -6,18 +6,16 @@ import { go } from '../actions';
 
 @Injectable()
 export class RoutingEffects {
-    constructor(
-        private actions$: Actions,
-        private router: Router,
-        ) {}
+  constructor(private actions$: Actions, private router: Router) {}
 
-    public goToSpecificRoute$ = createEffect(
-        () =>
-        this.actions$.pipe(
-            ofType(go),
-            tap(({path}) => {
-                this.router.navigate([path]);
-            })
-        ), { dispatch: false }
-    );
+  public goToSpecificRoute$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(go),
+        tap(({ path }) => {
+          this.router.navigate([path]);
+        })
+      ),
+    { dispatch: false }
+  );
 }
