@@ -19,7 +19,7 @@ pipelines:
             caches:
               - node
             script:
-              - npm test
+              - ng test
         - step:
             name: "Lint"
             caches:
