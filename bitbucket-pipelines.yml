@@ -1,46 +1,47 @@
 image: node:15.9.0
 
 pipelines:
-  default:
-    - step:
-        name: "Build"
-        caches:
-          - node
-        script:
-          - npm install --quiet
-          - npm run build --progress=false
-        artifacts:
-          - dist/erb/**
-    - step:
-        name: "Archive"
-        caches:
-          - node
-        script:
-          - tar -zcvf erb-app.tar.gz dist/erb
-        artifacts:
-          - archives/erb-app.tar.gz
-    - parallel:
+  branches:
+    master:
       - step:
-          name: "Test"
+          name: "Build"
           caches:
             - node
           script:
-            - npm test
+            - npm install --quiet
+            - npm run build --progress=false
+          artifacts:
+            - dist/erb/**
       - step:
-          name: "Lint"
+          name: "Archive"
           caches:
             - node
           script:
-            - npm lint
+            - tar -zcvf erb-app.tar.gz dist/erb
+          artifacts:
+            - archives/erb-app.tar.gz
+      - parallel:
+        - step:
+            name: "Test"
+            caches:
+              - node
+            script:
+              - npm test
+        - step:
+            name: "Lint"
+            caches:
+              - node
+            script:
+              - npm lint
 
-    - step:
-        name: Deploy
-        deployment: production
-        caches:
-          - pip
-        script:
-          - pipe: atlassian/heroku-deploy:0.1.1
-            variables:
-              HEROKU_API_KEY: $HEROKU_API_KEY
-              HEROKU_APP_NAME: $HEROKU_FRONT_APP_NAME
-              ZIP_FILE: archives/erb-app.tar.gz
+      - step:
+          name: Deploy
+          deployment: production
+          caches:
+            - pip
+          script:
+            - pipe: atlassian/heroku-deploy:0.1.1
+              variables:
+                HEROKU_API_KEY: $HEROKU_API_KEY
+                HEROKU_APP_NAME: $HEROKU_FRONT_APP_NAME
+                ZIP_FILE: archives/erb-app.tar.gz
