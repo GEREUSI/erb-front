@@ -19,7 +19,8 @@ pipelines:
             caches:
               - node
             script:
-              - ng test
+              - npm install --quiet
+              - npm test
         - step:
             name: "Lint"
             caches:
