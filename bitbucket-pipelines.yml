@@ -33,14 +33,14 @@ pipelines:
           script:
             - npm lint
 
-  - step:
-      name: Deploy
-      deployment: production
-      caches:
-        - pip
-      script:
-        - pipe: atlassian/heroku-deploy:0.1.1
-          variables:
-            HEROKU_API_KEY: $HEROKU_API_KEY
-            HEROKU_APP_NAME: $HEROKU_FRONT_APP_NAME
-            ZIP_FILE: archives/erb-app.tar.gz
+    - step:
+        name: Deploy
+        deployment: production
+        caches:
+          - pip
+        script:
+          - pipe: atlassian/heroku-deploy:0.1.1
+            variables:
+              HEROKU_API_KEY: $HEROKU_API_KEY
+              HEROKU_APP_NAME: $HEROKU_FRONT_APP_NAME
+              ZIP_FILE: archives/erb-app.tar.gz
