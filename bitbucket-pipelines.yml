@@ -10,17 +10,9 @@ pipelines:
           script:
             - npm install --quiet
             - npm run build --progress=false
+            - git archive --format=tar.gz master -o erb-app.tar.gz
           artifacts:
-            - dist/escape-rooms-ebooking-front/**
-      - step:
-          name: "Archive"
-          image: alpine:3.13.5
-          caches:
-            - node
-          script:
-            - tar -zcvf erb-app.tar.gz dist/escape-rooms-ebooking-front
-          artifacts:
-            - archives/erb-app.tar.gz
+            - erb-app.tar.gz
       - parallel:
         - step:
             name: "Test"
@@ -45,4 +37,4 @@ pipelines:
               variables:
                 HEROKU_API_KEY: $HEROKU_API_KEY
                 HEROKU_APP_NAME: $HEROKU_FRONT_APP_NAME
-                ZIP_FILE: archives/erb-app.tar.gz
+                ZIP_FILE: erb-app.tar.gz
