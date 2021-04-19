@@ -11,14 +11,14 @@ pipelines:
             - npm install --quiet
             - npm run build --progress=false
           artifacts:
-            - dist/erb/**
+            - dist/escape-rooms-ebooking-front/**
       - step:
           name: "Archive"
           image: alpine:3.13.5
           caches:
             - node
           script:
-            - tar -zcvf erb-app.tar.gz dist/erb
+            - tar -zcvf erb-app.tar.gz dist/escape-rooms-ebooking-front
           artifacts:
             - archives/erb-app.tar.gz
       - parallel:
