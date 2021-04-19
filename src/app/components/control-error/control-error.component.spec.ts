@@ -1,22 +1,20 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FooterComponent } from './footer.component';
+import { ControlErrorComponent } from './control-error.component';
 
-describe('FooterComponent', () => {
-  let component: FooterComponent;
-  let fixture: ComponentFixture<FooterComponent>;
+describe('ControlErrorComponent', () => {
+  let component: ControlErrorComponent;
+  let fixture: ComponentFixture<ControlErrorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FooterComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [ ControlErrorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FooterComponent);
+    fixture = TestBed.createComponent(ControlErrorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

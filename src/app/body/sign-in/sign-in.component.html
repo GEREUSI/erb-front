@@ -1,0 +1,30 @@
+<div class='container h-100'>
+    <div class='row align-items-center h-100'>
+        <div class='d-flex justify-content-center col-md-4 offset-md-4 justify-items-center'>
+            <form class='w-100 text-center' [formGroup]='signInForm' (ngSubmit)='onSubmit()'>
+                <div class='mb-3'>Don't have an account? <a href='/{{routes.SignUp}}'>Sign up here</a></div>
+                <fieldset>
+                    <legend class='border-bottom border-top p-3'>Sign in</legend>
+                    <div class='mb-3'>
+                        <input class='form-control' id='email' type='email' placeholder='Email' required formControlName='email'>
+                    </div>
+                    <div class='mb-3'>
+                        <input class='form-control'
+                            id='password' type='password' placeholder='Password' required formControlName='password'>
+                    </div>
+                    <div>                        
+                        <button class='mb-3 btn btn-success w-100' id='submit' type='submit' [disabled]="isLoading$ | async">
+                            <div class="spinner-wrapper">
+                                <span>Sign In </span>
+                                <mat-spinner *ngIf="isLoading$ | async" [diameter]="20"></mat-spinner>
+                            </div>
+                        </button>
+                    </div>
+                    <div *ngIf="hasErrors$ | async">
+                        {{errors$ | async}} 
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

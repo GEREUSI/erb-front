@@ -1,1 +1,10 @@
-<p>header works!</p>
+<mat-toolbar color="primary">
+    <button mat-icon-button (click)="goToHome()">
+        <span>
+            <h1>Escape room booking</h1>
+        </span>
+    </button>
+    <span class="spacer"></span>
+    <button mat-raised-button class="mx-1" (click)="goToSignIn()">Sign in</button>
+    <button mat-raised-button color="primary" (click)="goToSignUp()">Sign up</button>
+</mat-toolbar>
