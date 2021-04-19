@@ -11,7 +11,7 @@ pipelines:
           - npm run build --progress=false
         artifacts:
           - dist/erb/**
-     - step:
+    - step:
         name: "Archive"
         caches:
           - node
