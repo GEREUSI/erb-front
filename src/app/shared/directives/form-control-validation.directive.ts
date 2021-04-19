@@ -63,5 +63,5 @@ export class FormControlValidationDirective implements OnInit, OnDestroy {
     return this.errorContainer.createComponent(factory);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy(): void {}
 }
