@@ -1,7 +1,7 @@
 import { UserType } from "./user";
 
 export interface IUserData {
-  _id: string;
+  id: string;
   email: string;
   username: string;
   firstName: string;

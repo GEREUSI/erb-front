@@ -2,7 +2,6 @@ import { IUser } from './user';
 
 export interface SignUpResponse {
   user: IUser;
-  token: string;
 }
 
 export interface SignUpRequest {

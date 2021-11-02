@@ -13,7 +13,7 @@ export class SignUpService {
 
   signUp(signUpData: SignUpRequest): Observable<SignUpResponse> {
     const url = `${API.Prefix}/${API.SignUp}`;
-    const options = { headers: { 'Content-Type': 'application/json' } };
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' } };
     const body = JSON.stringify(signUpData);
 
     return this.http.post(url, body, options).pipe(map((data) => data as SignUpResponse));

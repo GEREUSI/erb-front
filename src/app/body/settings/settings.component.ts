@@ -5,7 +5,7 @@ import { take } from 'rxjs/operators';
 import { IUserData } from 'src/app/shared/models/settings';
 import { UserType } from 'src/app/shared/models/user';
 import { SettingsService } from 'src/app/shared/services/settings.service';
-import { getAuthenticatedUserId } from '../../store/selectors';
+import { getAuthenticatedUserId } from 'src/app/store/selectors/user.selectors';
 
 @Component({
   selector: 'app-settings',
@@ -17,7 +17,7 @@ export class SettingsComponent implements OnInit {
   public isInitialLoading = false;
   public isUpdating = false;
   public personalDataForm: FormGroup;
-  private userId?: string;
+  private userId?: number;
   private userData: IUserData;
 
   constructor(private formBuilder: FormBuilder, private store: Store, private settingsService: SettingsService) {}
@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
     this.store.select(getAuthenticatedUserId).pipe(take(1)).subscribe(
       (id)=> {
         this.userId = id;
-        this.settingsService.getUserData(id as string).subscribe((data) => {
+        this.settingsService.getUserData(id as number).subscribe((data) => {
           this.userData = data;
           this.personalDataForm.patchValue(data)
           this.isInitialLoading = false;
@@ -58,7 +58,7 @@ export class SettingsComponent implements OnInit {
   public onSubmit(): void {
     if (this.personalDataForm.valid) {
       this.isUpdating = true;
-      this.settingsService.updateUserData({...this.personalDataForm.getRawValue(), _id: this.userId}).subscribe(() => {
+      this.settingsService.updateUserData(this.personalDataForm.getRawValue(), this.userId as number).subscribe(() => {
         this.isUpdating = false;
       },
       () => {

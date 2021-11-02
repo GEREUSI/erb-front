@@ -27,7 +27,7 @@ export class UserEffects {
           this.signUpService.signUp(payload).subscribe(
             (signUpResponse: SignUpResponse) => {
               this.store.dispatch(signUpSuccess({ payload: signUpResponse }));
-              this.store.dispatch(go({ path: ROUTES.Home}));
+              this.store.dispatch(go({ path: ROUTES.SignIn}));
             },
             (errorResponse: HttpErrorResponse) => {
               this.store.dispatch(signUpFail({ errors: errorResponse.error.errors }));

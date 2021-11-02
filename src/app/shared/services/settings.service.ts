@@ -10,15 +10,15 @@ import { IUserData } from '../models/settings';
 export class SettingsService {
   constructor(private http: HttpClient) {}
 
-  getUserData(id: string): Observable<IUserData> {
-    const url = `${API.Prefix}/${API.Settings}/${id}`;
+  getUserData(userId: number): Observable<IUserData> {
+    const url = `${API.Prefix}/${API.Settings}/${userId}`;
 
-    return this.http.get<IUserData>(url);
+    return this.http.get<IUserData>(url,);
   }
 
-  updateUserData(userData: IUserData): Observable<IUserData> {
-    const url = `${API.Prefix}/${API.Settings}`;
-    const options = { headers: { 'Content-Type': 'application/json' } };
+  updateUserData(userData: IUserData, userId: number): Observable<IUserData> {
+    const url = `${API.Prefix}/${API.Settings}/${userId}`;
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' } };
     const body = JSON.stringify(userData);
 
     return this.http.patch<IUserData>(url, body, options);

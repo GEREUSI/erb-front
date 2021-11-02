@@ -13,7 +13,7 @@ export class SignInService {
 
   signIn(signInData: SignInRequest): Observable<SignInResponse> {
     const url = `${API.Prefix}/${API.SignIn}`;
-    const options = { headers: { 'Content-Type': 'application/json' } };
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' } };
     const body = JSON.stringify(signInData);
 
     return this.http.post(url, body, options).pipe(map((data) => data as SignInResponse));

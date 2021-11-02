@@ -29,7 +29,6 @@ describe('SignInService', () => {
   describe('signIn', () => {
     it('should make post call to SignIn API', () => {
       const expectedResponse: SignInResponse = {
-        user: {} as IUser,
         token: '',
       };
       let signInResponse: SignInResponse = {} as SignInResponse;
@@ -45,7 +44,6 @@ describe('SignInService', () => {
 
     it('should not make api calls', () => {
       const expectedResponse: SignInResponse = {
-        user: {} as IUser,
         token: '',
       };
       let signInResponse: SignInResponse = {} as SignInResponse;
