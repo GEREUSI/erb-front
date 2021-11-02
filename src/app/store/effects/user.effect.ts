@@ -44,8 +44,14 @@ export class UserEffects {
         tap(({ payload }) => {
           this.signInService.signIn(payload).subscribe(
             (signInResponse: SignInResponse) => {
-              this.store.dispatch(signInSuccess({ payload: signInResponse }));
-              this.store.dispatch(go({ path: ROUTES.Home}));
+              this.signInService.getUser(signInResponse.token).subscribe((userData) => {
+                this.store.dispatch(signInSuccess({ payload: {...signInResponse, user: userData} }));
+                this.store.dispatch(go({ path: ROUTES.Home}));
+              },
+              () => {
+                this.store.dispatch(signInSuccess({ payload: signInResponse }));
+                this.store.dispatch(go({ path: ROUTES.Home}));
+              })              
             },
             (errorResponse: HttpErrorResponse) => {
               this.store.dispatch(signInFail({ errors: errorResponse.error.errors }));

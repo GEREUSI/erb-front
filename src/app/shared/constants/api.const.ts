@@ -3,4 +3,5 @@ export enum API {
   Settings = 'api/v1/user',
   SignUp = 'api/v1/auth/register',
   SignIn = 'api/v1/auth/login',
+  User = 'api/v1/me',
 }
