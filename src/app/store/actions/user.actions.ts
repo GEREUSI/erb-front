@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { ROUTES } from 'src/app/shared/constants/routes.const';
 import { SignInRequest, SignInResponse } from 'src/app/shared/models/sign-in';
 import { SignUpRequest, SignUpResponse } from 'src/app/shared/models/sign-up';
 import { GeneralError } from 'src/app/shared/models/store';
@@ -11,6 +10,7 @@ export enum UserActions {
   SignUp = '[User] Sign up',
   SignUpSuccess = '[User] Sign up success',
   SignUpFail = '[User] Sign up fail',
+  LogOut = '[User] Log out',
 }
 
 export const signIn = createAction(UserActions.SignIn, props<{ payload: SignInRequest }>());
@@ -24,3 +24,5 @@ export const signUp = createAction(UserActions.SignUp, props<{ payload: SignUpRe
 export const signUpSuccess = createAction(UserActions.SignUpSuccess, props<{ payload: SignUpResponse }>());
 
 export const signUpFail = createAction(UserActions.SignUpFail, props<{ errors: GeneralError }>());
+
+export const logOut = createAction(UserActions.LogOut);

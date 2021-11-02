@@ -14,7 +14,7 @@ import { go, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSucces
 import { UserEffects } from './user.effect';
 import { SignUpService } from '../../shared/services/sign-up.service';
 import { SignInService } from '../../shared/services/sign-in.service';
-import { IUser } from '../../shared/models/iuser';
+import { IUser } from '../../shared/models/user';
 import { API } from '../../shared/constants/api.const';
 import { GeneralError } from '../../shared/models/store';
 

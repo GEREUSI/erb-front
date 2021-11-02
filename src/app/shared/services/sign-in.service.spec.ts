@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { take } from 'rxjs/operators';
 import { API } from '../constants/api.const';
-import { IUser } from '../models/iuser';
+import { IUser } from '../models/user';
 import { SignInResponse } from '../models/sign-in';
 
 import { SignInService } from './sign-in.service';

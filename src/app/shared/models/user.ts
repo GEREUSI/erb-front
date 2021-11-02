@@ -3,5 +3,11 @@ export interface IUser {
   email: string;
   password: string;
   username: string;
+  type: UserType;
   salt: string;
+}
+
+export enum UserType {
+  Renter = 'RENTER',
+  Tenant = 'Tenant',
 }

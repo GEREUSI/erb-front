@@ -1,13 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
 import { ROUTES } from '../../shared/constants/routes.const';
 import { SignInResponse } from '../../shared/models/sign-in';
 import { SignUpResponse } from '../../shared/models/sign-up';
-import { GeneralError } from '../../shared/models/store';
 import { SignInService } from '../../shared/services/sign-in.service';
 import { SignUpService } from '../../shared/services/sign-up.service';
 import { go, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions';
@@ -29,6 +27,7 @@ export class UserEffects {
           this.signUpService.signUp(payload).subscribe(
             (signUpResponse: SignUpResponse) => {
               this.store.dispatch(signUpSuccess({ payload: signUpResponse }));
+              this.store.dispatch(go({ path: ROUTES.Home}));
             },
             (errorResponse: HttpErrorResponse) => {
               this.store.dispatch(signUpFail({ errors: errorResponse.error.errors }));
@@ -46,6 +45,7 @@ export class UserEffects {
           this.signInService.signIn(payload).subscribe(
             (signInResponse: SignInResponse) => {
               this.store.dispatch(signInSuccess({ payload: signInResponse }));
+              this.store.dispatch(go({ path: ROUTES.Home}));
             },
             (errorResponse: HttpErrorResponse) => {
               this.store.dispatch(signInFail({ errors: errorResponse.error.errors }));

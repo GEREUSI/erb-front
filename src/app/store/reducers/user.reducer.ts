@@ -1,8 +1,7 @@
 import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
-import { IUser } from 'src/app/shared/models/iuser';
-import { SignUpResponse } from 'src/app/shared/models/sign-up';
+import { IUser } from 'src/app/shared/models/user';
 import { LoadingStatus } from 'src/app/shared/models/store';
-import { signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions/user.actions';
+import { logOut, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions/user.actions';
 
 export interface State {
   signUpLoadingStatus: LoadingStatus;
@@ -66,12 +65,14 @@ const reducer: ActionReducer<State> = createReducer(
   })),
   on(signInFail, (state, { errors }) => ({
     ...state,
+    token: 'asdasdads',
     signInLoadingStatus: {
       loading: false,
       loaded: false,
       errors,
     },
-  }))
+  })),
+  on(logOut, () => initialState)
 );
 
 export function userReducer(state: State | undefined, action: Action): State {

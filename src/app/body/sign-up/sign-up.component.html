@@ -2,24 +2,30 @@
     <div class='row align-items-center h-100'>
         <div class='d-flex justify-content-center col-md-4 offset-md-4 justify-items-center'>
             <form class='w-100 text-center' [formGroup]='signUpForm' (ngSubmit)='onSubmit()'>
-                <div class='mb-3'>Already have an account? <a href='/{{routes.SignIn}}'>Sign in here</a></div>
+                <div class='mb-3'>Jau turite paskyrą? <a href='/{{routes.SignIn}}'>Prisijunkite</a></div>
                 <fieldset>
-                    <legend class='border-bottom border-top p-3'>Create an account</legend>
+                    <legend class='border-bottom border-top p-3'>Sukurkite paskyrą</legend>
                     <div class='mb-3'>
-                        <input class='form-control' id='username' type='text' placeholder='Username'
+                        <input class='form-control' id='username' type='text' placeholder='Slapyvardis'
                             formControlName='username'>
                     </div>
                     <div class='mb-3'>
-                        <input class='form-control' id='password' type='password' placeholder='Password'
+                        <input class='form-control' id='password' type='password' placeholder='Slaptažodis'
                             formControlName='password'>
                     </div>
                     <div class='mb-3'>
-                        <input class='form-control' id='email' type='email' placeholder='Email' formControlName='email'>
+                        <input class='form-control' id='email' type='email' placeholder='El. paštas' formControlName='email'>
+                    </div>
+                    <div class='mb-3'>
+                        <select class="form-select" aria-label="Default select example" formControlName='type'>
+                            <option [value]="userType.Tenant">Nuomininkas</option>
+                            <option [value]="userType.Renter">Nuomuotojas</option>
+                        </select>
                     </div>
                     <div>
                         <button class='mb-3 btn btn-success w-100' id='submit' type='submit' [disabled]="isLoading$ | async">
                             <div class="spinner-wrapper">
-                                <span>Sign Up </span>
+                                <span>Registruotis</span>
                                 <mat-spinner *ngIf="isLoading$ | async" [diameter]="20"></mat-spinner>
                             </div>
                         </button>

@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SignUpService } from './sign-up.service';
 import { API } from '../constants/api.const';
 import { SignUpResponse } from '../models/sign-up';
-import { IUser } from '../models/iuser';
+import { IUser } from '../models/user';
 import { take } from 'rxjs/operators';
 
 describe('SignUpServiceService', () => {

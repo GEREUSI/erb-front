@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { UserType } from 'src/app/shared/models/user';
 import { ROUTES } from '../../shared/constants/routes.const';
 import { SignUpRequest } from '../../shared/models/sign-up';
 import { go, signUp } from '../../store/actions';
@@ -13,6 +14,7 @@ import { getIsSignUpLoading, getSignUpErrors, getSignUpHasErrors } from '../../s
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
+  public readonly userType= UserType
   public isLoading$: Observable<boolean>;
   public hasErrors$: Observable<boolean>;
   public errors$: Observable<string>;
@@ -31,6 +33,7 @@ export class SignUpComponent implements OnInit {
         username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
         password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
         email: ['', [Validators.required, Validators.email]],
+        type: [UserType.Tenant, [Validators.required]],
       },
       { updateOn: 'blur' }
     );

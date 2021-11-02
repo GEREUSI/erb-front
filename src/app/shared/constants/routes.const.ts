@@ -3,4 +3,5 @@ export enum ROUTES {
   HomeRedirect = '/home',
   SignUp = 'sign-up',
   SignIn = 'sign-in',
+  Settings = 'settings'
 }

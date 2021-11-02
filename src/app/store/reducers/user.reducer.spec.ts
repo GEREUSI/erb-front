@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IUser } from '../../shared/models/iuser';
+import { IUser } from '../../shared/models/user';
 import { SignUpRequest, SignUpResponse } from '../../shared/models/sign-up';
 import { UserState } from './index';
 import { signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions';

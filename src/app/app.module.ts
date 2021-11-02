@@ -56,6 +56,7 @@ import { FormControlValidationDirective } from './shared/directives/form-control
 import { FormSubmitDirective } from './shared/directives/form-submit.directive';
 import { ControlErrorComponent } from './shared/components/control-error/control-error.component';
 import { reducers } from './store/reducers';
+import { SettingsComponent } from './body/settings/settings.component';
 
 const angularMaterialImports = [
   MatAutocompleteModule,
@@ -106,6 +107,7 @@ const angularMaterialImports = [
     FormControlValidationDirective,
     FormSubmitDirective,
     ControlErrorComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
