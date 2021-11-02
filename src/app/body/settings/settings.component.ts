@@ -34,7 +34,7 @@ export class SettingsComponent implements OnInit {
         firstName: [null],
         lastName: [null],
         birthday: [null],
-        type: [null],
+        typeId: [null],
       },
       { updateOn: 'blur' }
     );
@@ -43,8 +43,8 @@ export class SettingsComponent implements OnInit {
       this.userId = id as number;
       this.userToken = token as string;
       this.settingsService.getUserData(this.userId, this.userToken).subscribe((data) => {
-        this.userData = data;
-        this.personalDataForm.patchValue(data)
+        this.userData = data.user;
+        this.personalDataForm.patchValue(data.user)
         this.isInitialLoading = false;
       }, () => {
         this.isInitialLoading = false;
