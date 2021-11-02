@@ -33,7 +33,7 @@ export class SettingsComponent implements OnInit {
         email: [null, [Validators.required, Validators.email]],
         firstName: [null],
         lastName: [null],
-        birthday: [null],
+        birthdayDate: [null],
         typeId: [null],
       },
       { updateOn: 'blur' }

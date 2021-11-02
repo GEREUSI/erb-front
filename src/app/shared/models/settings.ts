@@ -10,6 +10,6 @@ export interface IUserData {
   username: string;
   firstName: string;
   lastName: string;
-  birthday: string;
-  type: UserType;
+  birthdayDate: string;
+  typeId: UserType;
 }
