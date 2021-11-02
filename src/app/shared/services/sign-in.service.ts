@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { API } from '../constants/api.const';
-import { IUserData } from '../models/settings';
+import { IUser } from '../models/user';
 import { SignInRequest, SignInResponse } from '../models/sign-in';
 
 @Injectable({
@@ -20,11 +20,11 @@ export class SignInService {
     return this.http.post(url, body, options).pipe(map((data) => data as SignInResponse));
   }
 
-  getUser(token: string): Observable<IUserData> {
+  getUser(token: string): Observable<IUser> {
     const url = `${API.Prefix}/${API.User}`;
     const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'token': token } };
 
-    return this.http.post<IUserData>(url, null, options);
+    return this.http.post<IUser>(url, null, options);
 
   }
 }

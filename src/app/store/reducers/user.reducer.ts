@@ -65,7 +65,6 @@ const reducer: ActionReducer<State> = createReducer(
   })),
   on(signInFail, (state, { errors }) => ({
     ...state,
-    token: 'asdasdads',
     signInLoadingStatus: {
       loading: false,
       loaded: false,

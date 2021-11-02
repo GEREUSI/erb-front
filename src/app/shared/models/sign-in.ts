@@ -1,8 +1,8 @@
-import { IUserData } from "./settings";
+import { IUser } from "./user";
 
 export interface SignInResponse {
   token: string;
-  user?: IUserData
+  user?: IUser
 }
 
 export interface SignInRequest {
