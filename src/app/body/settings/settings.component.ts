@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { IUserData } from 'src/app/shared/models/settings';
 import { UserType } from 'src/app/shared/models/user';
 import { SettingsService } from 'src/app/shared/services/settings.service';
-import { getAuthenticatedUserId } from 'src/app/store/selectors/user.selectors';
+import { getAuthenticatedUserId, getAuthenticatedUserToken } from 'src/app/store/selectors/user.selectors';
 
 @Component({
   selector: 'app-settings',
@@ -17,7 +18,8 @@ export class SettingsComponent implements OnInit {
   public isInitialLoading = false;
   public isUpdating = false;
   public personalDataForm: FormGroup;
-  private userId?: number;
+  private userId: number;
+  private userToken: string;
   private userData: IUserData;
 
   constructor(private formBuilder: FormBuilder, private store: Store, private settingsService: SettingsService) {}
@@ -37,16 +39,23 @@ export class SettingsComponent implements OnInit {
       { updateOn: 'blur' }
     );
 
+    combineLatest([this.store.select(getAuthenticatedUserId), this.store.select(getAuthenticatedUserToken)]).subscribe(([id, token]) => {
+      this.userId = id as number;
+      this.userToken = token as string;
+      this.settingsService.getUserData(this.userId, this.userToken).subscribe((data) => {
+        this.userData = data;
+        this.personalDataForm.patchValue(data)
+        this.isInitialLoading = false;
+      }, () => {
+        this.isInitialLoading = false;
+      })
+    })
+
+
+
     this.store.select(getAuthenticatedUserId).pipe(take(1)).subscribe(
       (id)=> {
-        this.userId = id;
-        this.settingsService.getUserData(id as number).subscribe((data) => {
-          this.userData = data;
-          this.personalDataForm.patchValue(data)
-          this.isInitialLoading = false;
-        }, () => {
-          this.isInitialLoading = false;
-        })
+        
       }
     )
   }
@@ -58,7 +67,7 @@ export class SettingsComponent implements OnInit {
   public onSubmit(): void {
     if (this.personalDataForm.valid) {
       this.isUpdating = true;
-      this.settingsService.updateUserData(this.personalDataForm.getRawValue(), this.userId as number).subscribe(() => {
+      this.settingsService.updateUserData(this.personalDataForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
         this.isUpdating = false;
       },
       () => {
@@ -68,3 +77,4 @@ export class SettingsComponent implements OnInit {
     }
   }
 }
+
