@@ -1,51 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
-import { IRoom, IRoomSearchParams, RoomType } from 'src/app/shared/models/room';
+import { ROUTES } from 'src/app/shared/constants/routes.const';
+import { IRoom, RoomType } from 'src/app/shared/models/room';
 import { RoomsService } from 'src/app/shared/services/rooms.service';
+import { go } from 'src/app/store/actions';
 import { getAuthenticatedUserId, getAuthenticatedUserToken } from 'src/app/store/selectors';
-import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-user-rooms',
+  templateUrl: './user-rooms.component.html',
+  styleUrls: ['./user-rooms.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class UserRoomsComponent implements OnInit {
   public rooms: IRoom[];
   public isLoading = true;
-  public searchForm = this.createSearchForm()
   private userId: number;
   private userToken: string;
 
-  constructor(private roomsService: RoomsService, private store: Store, private dialog: MatDialog) {}
+  constructor(private roomsService: RoomsService, private store: Store) {}
 
   ngOnInit(): void {
-    this.loadData()
-  }
-
-  public openSearchParamsModal(): void {
-    const dialogRef = this.dialog.open(SearchDialogComponent, {
-      disableClose: true,
-      data: {form: this.searchForm},
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        this.searchForm = result
-        this.loadData()
-      }
-    });
-  }
-
-  private loadData(): void {
     combineLatest([this.store.select(getAuthenticatedUserId), this.store.select(getAuthenticatedUserToken)]).subscribe(([id, token]) => {
       this.userId = id as number;
       this.userToken = token as string;
-      const params = this.getSearchParams();
-      this.roomsService.getRooms(this.userToken, params).subscribe(
+      this.roomsService.getUserRooms(this.userId, this.userToken).subscribe(
         (rooms) => {
           this.isLoading = false;
           this.rooms = rooms;
@@ -54,16 +35,16 @@ export class HomeComponent implements OnInit {
           this.isLoading = false;
           this.rooms = [{
             id: 1,
-            title: 'Pabėgimo kambario ne pavadinimas',
-            address: 'Vilnius, adreso g. 25',
-            size: '2-3 žmonėms',
+            title: 'Title',
+            address: 'Address',
+            size: 'size',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             price: 100,
             typeId: RoomType.Action,}, {
               id: 2,
-              title: 'Pabėgimo kambario pavadinimas',
-              address: 'Vilnius, P. adreso g. 105',
-              size: '2-5 žmonėms',
+              title: 'Title',
+              address: 'Address',
+              size: 'size',
               description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
               price: 100,
               typeId: RoomType.Action,}]
@@ -71,23 +52,13 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  private createSearchForm(): FormGroup {
-    let form = new FormGroup({})
-    Object.values(RoomType).forEach((roomType) => {
-      form.addControl(roomType, new FormControl(true, []))
-    });
-
-    return form
+  public onCreateClick(): void {
+    this.store.dispatch(go({path: ROUTES.RoomCreate}))
   }
 
-  private getSearchParams(): IRoomSearchParams {
-    let roomTypes: string[] = []
-    Object.values(RoomType).forEach((roomType) => {
-      if(this.searchForm.get(roomType)?.value){
-        roomTypes = [...roomTypes, roomType]
-      }
-    })
-
-    return { roomType: roomTypes }
+  public onRoomSelect(id?: number): void {
+    console.log(id)
+    this.store.dispatch(go({path: ROUTES.RoomEditRedirect, id}))
   }
 }
+

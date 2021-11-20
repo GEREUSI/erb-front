@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SignUpService } from './sign-up.service';
 import { API } from '../constants/api.const';
 import { SignUpResponse } from '../models/sign-up';
-import { IUser } from '../models/user';
+import { IUser, UserType } from '../models/user';
 import { take } from 'rxjs/operators';
 
 describe('SignUpServiceService', () => {
@@ -32,7 +32,7 @@ describe('SignUpServiceService', () => {
       };
       let signUpResponse: SignUpResponse = {} as SignUpResponse;
       service
-        .signUp({ username: '', email: '', password: '' })
+        .signUp({ username: '', email: '', password: '', typeId: UserType.Tenant })
         .pipe(take(1))
         .subscribe((response) => {
           signUpResponse = response;
@@ -47,7 +47,7 @@ describe('SignUpServiceService', () => {
       };
       let signUpResponse: SignUpResponse = {} as SignUpResponse;
       service
-        .signUp({ username: '', email: '', password: '' })
+        .signUp({ username: '', email: '', password: '', typeId: UserType.Tenant })
         .pipe(take(1))
         .subscribe((response) => {
           signUpResponse = response;
@@ -58,7 +58,7 @@ describe('SignUpServiceService', () => {
     it('should return an error', () => {
       let signUpResponse: HttpErrorResponse = {} as HttpErrorResponse;
       service
-        .signUp({ username: '', email: '', password: '' })
+        .signUp({ username: '', email: '', password: '', typeId: UserType.Tenant })
         .pipe(take(1))
         .subscribe(
           (response) => {},

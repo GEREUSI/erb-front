@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { UserType } from 'src/app/shared/models/user';
 import { UserState } from '../reducers';
 
 export const getUserState = createFeatureSelector<UserState>('user');
@@ -18,5 +19,7 @@ export const getSignInErrors = createSelector(getUserState, (state) => state.sig
 export const getIsAuthenticatedUser = createSelector(getUserState, (state) => !!state.token);
 
 export const getAuthenticatedUserId = createSelector(getUserState, (state) => state.user?.id);
+
+export const getIsUserRenter = createSelector(getUserState, (state) => state.user?.typeId === UserType.Renter);
 
 export const getAuthenticatedUserToken = createSelector(getUserState, (state) => state.token);

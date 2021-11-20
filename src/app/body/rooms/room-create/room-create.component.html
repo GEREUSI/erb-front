@@ -1,0 +1,47 @@
+<div class='container h-100'>
+    <form class='d-flex h-100 flex-column justify-content-between my-4' [formGroup]='roomForm' (ngSubmit)='onSubmit()'>
+        <div class='d-flex h-100 flex-row justify-content-between'>
+            <div class="col-6"></div>
+            <div class="d-flex h-100 flex-column justify-content-between my-4 col-6">
+                <div>                     
+                    <div class='mb-3'>
+                        <label for="title">Kambario pavadinimas</label>
+                        <input class='form-control' id='title' type='text' placeholder='Kambario pavadinimas' formControlName='title'>
+                    </div>
+                    <div class='mb-3'>
+                        <label for="address">Kambario adresas</label>
+                        <input class='form-control' id='address' type='text' placeholder='Kambario adresas' formControlName='address'>
+                    </div>
+                    <div class='mb-3'>
+                        <label for="size">Kambario dydis</label>
+                        <input class='form-control' id='size' type='text' placeholder='Kambario dydis' formControlName='size'>
+                    </div>
+                    <div class='mb-3'>
+                        <label for="description">Kambario aprašymas</label>
+                        <textarea class='form-control' id='description' type='text' placeholder='Kambario aprašymas' formControlName='description' rows="6"></textarea>
+                    </div>
+                    <div class='mb-3'>
+                        <label for="price">Kambario kaina (€)</label>
+                        <input class='form-control' id='price' type='number' placeholder='Kambario kaina' formControlName='price'>
+                    </div>
+                    <div class='mb-3'>
+                        <label for="type">Kambario tipas</label>
+                        <select class="form-select" id='type' aria-label="Default select example" formControlName='typeId'>
+                            <option [value]="roomType.Scare">Siaubo</option>
+                            <option [value]="roomType.Action">Veiksmo</option>
+                            <option [value]="roomType.Puzzle">Delione</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-end mb-5">        
+                    <button class='mb-3 btn btn-lg btn-success' id='submit' type='submit' [disabled]="isUpdating">
+                        <div class="spinner-wrapper">
+                            <span>Išsaugoti</span>
+                            <mat-spinner *ngIf="isUpdating" [diameter]="20"></mat-spinner>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

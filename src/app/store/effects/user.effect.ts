@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
+import { IUser, USER_TOKEN_KEY } from 'src/app/shared/models/user';
+import { UserService } from 'src/app/shared/services/user.service';
 import { ROUTES } from '../../shared/constants/routes.const';
 import { SignInResponse } from '../../shared/models/sign-in';
 import { SignUpResponse } from '../../shared/models/sign-up';
 import { SignInService } from '../../shared/services/sign-in.service';
 import { SignUpService } from '../../shared/services/sign-up.service';
-import { go, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions';
+import { go, loadUserData, loadUserDataFail, loadUserDataSuccess, logOut, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions';
 
 @Injectable()
 export class UserEffects {
@@ -16,7 +18,8 @@ export class UserEffects {
     private actions$: Actions,
     private store: Store,
     private signUpService: SignUpService,
-    private signInService: SignInService
+    private signInService: SignInService,
+    private userService: UserService
   ) {}
 
   public signUpUser$ = createEffect(
@@ -37,6 +40,25 @@ export class UserEffects {
       ),
     { dispatch: false }
   );
+
+  public loadUserData$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loadUserData),
+        tap(({ token }) => {
+          this.userService.getUserData(token).subscribe(
+            (user: IUser) => {
+              this.store.dispatch(loadUserDataSuccess({ payload: user }));
+            },
+            (errorResponse: HttpErrorResponse) => {
+              this.store.dispatch(loadUserDataFail({ errors: errorResponse.error.errors }));
+            }
+          );
+        })
+      ),
+    { dispatch: false }
+  );
+
   public signInUser$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -47,6 +69,7 @@ export class UserEffects {
               this.signInService.getUser(signInResponse.token).subscribe((userData) => {
                 this.store.dispatch(signInSuccess({ payload: {...signInResponse, user: userData} }));
                 this.store.dispatch(go({ path: ROUTES.Home}));
+                localStorage.setItem(USER_TOKEN_KEY, signInResponse.token)
               },
               () => {
                 this.store.dispatch(signInSuccess({ payload: signInResponse }));
@@ -61,12 +84,24 @@ export class UserEffects {
       ),
     { dispatch: false }
   );
+
   public redirectToHome$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(signInSuccess, signUpSuccess),
         tap(() => {
           this.store.dispatch(go({ path: ROUTES.Home }));
+        })
+      ),
+    { dispatch: false }
+  );
+
+  public logOut$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(logOut),
+        tap(() => {
+          localStorage.setItem(USER_TOKEN_KEY, '')          
         })
       ),
     { dispatch: false }

@@ -1,0 +1,20 @@
+<div class='d-flex h-100 flex-row'>
+    <div class="icon mr-2">
+        <mat-icon class="large">image_not_supported</mat-icon>    
+    </div>
+
+    <div class="d-flex flex-grow-1 justify-content-between">
+        <div>
+            <h2 class="mb-0">{{room.title}}</h2>
+            <p class="mb-0">{{room.address}}</p>
+            <p class="mb-3">{{room.size}}</p>
+            <p class="description">{{room.description}}</p>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-end price">
+            <button class='btn btn-success align-self-end' type='button'>
+                <h2 class="m-0">Nuo {{room.price}} €</h2>
+            </button>
+        </div>
+    </div>
+</div>

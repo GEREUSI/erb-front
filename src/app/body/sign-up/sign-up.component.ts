@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
         username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
         password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
         email: ['', [Validators.required, Validators.email]],
-        type: [UserType.Tenant, [Validators.required]],
+        typeId: [UserType.Tenant, [Validators.required]],
       },
       { updateOn: 'blur' }
     );

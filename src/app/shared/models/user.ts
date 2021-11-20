@@ -10,3 +10,5 @@ export enum UserType {
   Renter = 'renter',
   Tenant = 'tenant',
 }
+
+export const USER_TOKEN_KEY = "user-token"

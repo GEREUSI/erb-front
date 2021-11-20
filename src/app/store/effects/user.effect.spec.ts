@@ -1,7 +1,5 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Action } from '@ngrx/store';
@@ -14,8 +12,6 @@ import { go, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSucces
 import { UserEffects } from './user.effect';
 import { SignUpService } from '../../shared/services/sign-up.service';
 import { SignInService } from '../../shared/services/sign-in.service';
-import { IUser } from '../../shared/models/user';
-import { API } from '../../shared/constants/api.const';
 import { GeneralError } from '../../shared/models/store';
 
 describe('UserEffects', () => {
@@ -63,13 +59,6 @@ describe('UserEffects', () => {
   });
 
   describe('signInUser', () => {
-    it('should navigate to home if signInSuccess action is called', () => {
-      jest.spyOn(signInService, 'signIn').mockReturnValue(of({} as SignUpResponse));
-      actions$ = of(signIn({ payload: {} as SignInRequest }));
-
-      effects.signInUser$.subscribe();
-      expect(store.dispatch).toHaveBeenCalledWith(signInSuccess({ payload: {} as SignInResponse }));
-    });
     it('should navigate to home if signUpSuccess action is called', () => {
       jest.spyOn(signInService, 'signIn').mockReturnValue(throwError({ error: { errors: {} as GeneralError } }));
       actions$ = of(signIn({ payload: {} as SignUpRequest }));

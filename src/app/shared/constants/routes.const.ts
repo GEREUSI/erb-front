@@ -3,5 +3,9 @@ export enum ROUTES {
   HomeRedirect = '/home',
   SignUp = 'sign-up',
   SignIn = 'sign-in',
-  Settings = 'settings'
+  Settings = 'settings',
+  RoomCreate = 'room/create',
+  RoomEdit = 'room/edit/:id',
+  RoomEditRedirect = 'room/edit',
+  UserRooms = 'rooms'
 }

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
+import { UserType } from 'src/app/shared/models/user';
 import { ROUTES } from '../../shared/constants/routes.const';
 import { go, signUp } from '../../store/actions';
 import { getIsSignUpLoading, getSignUpErrors, getSignUpHasErrors } from '../../store/selectors';
@@ -52,6 +53,7 @@ describe('SignUpComponent', () => {
         username: '',
         email: '',
         password: '',
+        typeId: 'tenant'
       });
     });
   });
@@ -68,7 +70,7 @@ describe('SignUpComponent', () => {
         get: () => true,
       });
       component.onSubmit();
-      expect(store.dispatch).toHaveBeenCalledWith(signUp({ payload: { email: '', password: '', username: '' } }));
+      expect(store.dispatch).toHaveBeenCalledWith(signUp({ payload: { email: '', password: '', username: '', typeId: UserType.Tenant } }));
     });
     it('if form is invalid should not dispatch action', () => {
       component.onSubmit();

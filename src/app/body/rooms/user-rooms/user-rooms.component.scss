@@ -1,0 +1,17 @@
+.spinner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+}
+
+app-room {
+  cursor: pointer;
+  &:hover{
+    background-color: #F2F2F2
+  }
+}

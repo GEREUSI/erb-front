@@ -5,4 +5,4 @@ export enum RoutingActions {
   Go = '[Routing] Go',
 }
 
-export const go = createAction(RoutingActions.Go, props<{ path: ROUTES }>());
+export const go = createAction(RoutingActions.Go, props<{ path: ROUTES, id?: any }>());

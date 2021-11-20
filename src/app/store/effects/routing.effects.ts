@@ -12,8 +12,9 @@ export class RoutingEffects {
     () =>
       this.actions$.pipe(
         ofType(go),
-        tap(({ path }) => {
-          this.router.navigate([path]);
+        tap(({ path, id }) => {
+          const navigationOptions = id? [path + `/${id}`] : [path]
+          this.router.navigate(navigationOptions)
         })
       ),
     { dispatch: false }

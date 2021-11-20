@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IUser } from '../../shared/models/user';
+import { IUser, UserType } from '../../shared/models/user';
 import { SignUpRequest, SignUpResponse } from '../../shared/models/sign-up';
 import { UserState } from './index';
 import { signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions';
@@ -19,7 +19,7 @@ describe('User reducer', () => {
 
   describe('signUp action', () => {
     it('should set sign up loading and reset error', () => {
-      const payload: SignUpRequest = { username: '', password: '', email: '' };
+      const payload: SignUpRequest = { username: '', password: '', email: '', typeId: UserType.Tenant };
       const action: Action = signUp({ payload });
       const result: UserState = userReducer(initialState, action);
 
@@ -32,14 +32,13 @@ describe('User reducer', () => {
 
   describe('signUpSuccess action', () => {
     it('should set sign up to loaded', () => {
-      const payload: SignUpResponse = { user: {} as IUser, token: '' };
+      const payload: SignUpResponse = { user: {} as IUser };
       const action: Action = signUpSuccess({ payload });
       const result: UserState = userReducer(initialState, action);
 
       expect(result).toEqual({
         ...initialState,
         user: {} as IUser,
-        token: '',
         signUpLoadingStatus: {
           loaded: true,
           loading: false,

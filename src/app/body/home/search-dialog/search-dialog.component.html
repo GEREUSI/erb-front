@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Pasirinkite filtrus</h1>
+<form [formGroup]="data.form">
+  <h3 class="mb-1">Kambario tipai:</h3>
+  <div class="d-flex flex-column">
+    <mat-slide-toggle class="mb-2" *ngFor="let roomType of roomTypes" [formControlName]="roomType">{{getRoomTypeName(roomType)}}</mat-slide-toggle>
+  </div>
+</form>
+<div mat-dialog-actions>
+  <button mat-button class="btn btn-secondary" (click)="onNoClick()">Atšaukti</button>
+  <button mat-button class="btn btn-primary" (click)="onYesClick()" cdkFocusInitial>Išsaugoti</button>
+</div>

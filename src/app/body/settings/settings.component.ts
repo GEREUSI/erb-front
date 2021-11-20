@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { IUserData } from 'src/app/shared/models/settings';
 import { UserType } from 'src/app/shared/models/user';
-import { SettingsService } from 'src/app/shared/services/settings.service';
+import { UserService } from 'src/app/shared/services/user.service';
 import { getAuthenticatedUserId, getAuthenticatedUserToken } from 'src/app/store/selectors/user.selectors';
 
 @Component({
@@ -22,7 +22,7 @@ export class SettingsComponent implements OnInit {
   private userToken: string;
   private userData: IUserData;
 
-  constructor(private formBuilder: FormBuilder, private store: Store, private settingsService: SettingsService) {}
+  constructor(private formBuilder: FormBuilder, private store: Store, private userService: UserService) {}
 
   ngOnInit(): void {
     this.isInitialLoading = true;
@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit {
     combineLatest([this.store.select(getAuthenticatedUserId), this.store.select(getAuthenticatedUserToken)]).subscribe(([id, token]) => {
       this.userId = id as number;
       this.userToken = token as string;
-      this.settingsService.getUserData(this.userId, this.userToken).subscribe((data) => {
+      this.userService.getUserSettings(this.userId, this.userToken).subscribe((data) => {
         this.userData = data.user;
         this.personalDataForm.patchValue(data.user)
         this.isInitialLoading = false;
@@ -67,7 +67,7 @@ export class SettingsComponent implements OnInit {
   public onSubmit(): void {
     if (this.personalDataForm.valid) {
       this.isUpdating = true;
-      this.settingsService.updateUserData(this.personalDataForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
+      this.userService.updateUserSettings(this.personalDataForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
         this.isUpdating = false;
       },
       () => {

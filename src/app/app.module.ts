@@ -57,6 +57,12 @@ import { FormSubmitDirective } from './shared/directives/form-submit.directive';
 import { ControlErrorComponent } from './shared/components/control-error/control-error.component';
 import { reducers } from './store/reducers';
 import { SettingsComponent } from './body/settings/settings.component';
+import { RoomCreateComponent } from './body/rooms/room-create/room-create.component';
+import { RoomEditComponent } from './body/rooms/room-edit/room-edit.component';
+import { UserRoomsComponent } from './body/rooms/user-rooms/user-rooms.component';
+import { RoomComponent } from './body/rooms/room/room.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { SearchDialogComponent } from './body/home/search-dialog/search-dialog.component';
 
 const angularMaterialImports = [
   MatAutocompleteModule,
@@ -94,6 +100,7 @@ const angularMaterialImports = [
   MatToolbarModule,
   MatTooltipModule,
   MatTreeModule,
+  NgbTooltipModule
 ];
 
 @NgModule({
@@ -108,6 +115,11 @@ const angularMaterialImports = [
     FormSubmitDirective,
     ControlErrorComponent,
     SettingsComponent,
+    RoomCreateComponent,
+    RoomEditComponent,
+    UserRoomsComponent,
+    RoomComponent,
+    SearchDialogComponent
   ],
   imports: [
     BrowserModule,

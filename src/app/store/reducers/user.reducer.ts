@@ -1,7 +1,7 @@
 import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { IUser } from 'src/app/shared/models/user';
 import { LoadingStatus } from 'src/app/shared/models/store';
-import { logOut, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions/user.actions';
+import { loadUserDataSuccess, logOut, setUserToken, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions/user.actions';
 
 export interface State {
   signUpLoadingStatus: LoadingStatus;
@@ -71,6 +71,11 @@ const reducer: ActionReducer<State> = createReducer(
       errors,
     },
   })),
+  on(loadUserDataSuccess, (state, { payload }) => ({
+    ...state,
+    user: payload
+  })),
+  on(setUserToken, (state, {token }) => ({...state, token})),
   on(logOut, () => initialState)
 );
 

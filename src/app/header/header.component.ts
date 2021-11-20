@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ROUTES } from '../shared/constants/routes.const';
 import { go, logOut } from '../store/actions';
-import { getIsAuthenticatedUser } from '../store/selectors';
+import { getIsAuthenticatedUser, getIsUserRenter } from '../store/selectors';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +11,7 @@ import { getIsAuthenticatedUser } from '../store/selectors';
 })
 export class HeaderComponent {
   public isAuthenticatedUser$ = this.store.select(getIsAuthenticatedUser);
+  public isRenter$ = this.store.select(getIsUserRenter);
 
   constructor(private store: Store<{}>) {}
 
@@ -28,6 +29,10 @@ export class HeaderComponent {
 
   public goToSettings(): void {
     this.store.dispatch(go({ path: ROUTES.Settings}))
+  }
+
+  public goToUserRooms(): void {
+    this.store.dispatch(go({ path: ROUTES.UserRooms}))
   }
 
   public logOut(): void {
