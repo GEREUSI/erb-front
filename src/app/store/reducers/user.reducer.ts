@@ -1,11 +1,12 @@
 import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { IUser } from 'src/app/shared/models/user';
 import { LoadingStatus } from 'src/app/shared/models/store';
-import { loadUserDataSuccess, logOut, setUserToken, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions/user.actions';
+import { loadUserData, loadUserDataFail, loadUserDataSuccess, logOut, setUserToken, signIn, signInFail, signInSuccess, signUp, signUpFail, signUpSuccess } from '../actions/user.actions';
 
 export interface State {
   signUpLoadingStatus: LoadingStatus;
   signInLoadingStatus: LoadingStatus;
+  userDataLoadingStatus: LoadingStatus;
   user?: IUser;
   token?: string;
 }
@@ -16,6 +17,10 @@ export const initialState: State = {
     loading: false,
   },
   signInLoadingStatus: {
+    loaded: false,
+    loading: false,
+  },
+  userDataLoadingStatus: {
     loaded: false,
     loading: false,
   },
@@ -71,9 +76,27 @@ const reducer: ActionReducer<State> = createReducer(
       errors,
     },
   })),
+  on(loadUserData, (state) => ({
+    ...state,
+    userDataLoadingStatus: {
+      loading: true,
+      loaded: false
+    }
+  })),
   on(loadUserDataSuccess, (state, { payload }) => ({
     ...state,
-    user: payload
+    user: payload,
+    userDataLoadingStatus: {
+      loading: false,
+      loaded: true
+    }
+  })),
+  on(loadUserDataFail, (state) => ({
+    ...state,
+    userDataLoadingStatus: {
+      loading: false,
+      loaded: false
+    }
   })),
   on(setUserToken, (state, {token }) => ({...state, token})),
   on(logOut, () => initialState)

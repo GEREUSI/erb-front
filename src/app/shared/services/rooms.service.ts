@@ -34,8 +34,9 @@ export class RoomsService {
 
   getRooms(token: string, params: IRoomSearchParams): Observable<IRoom[]> {
     const url = `${API.Prefix}/rooms`;
-    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }, params: params as unknown as HttpParams };
-
+    const searchParams = { roomType: params.roomType.join(',')}
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }, params: searchParams as unknown as HttpParams };
+    
     return this.http.get<IRoom[]>(url, options);
   }
 }

@@ -21,7 +21,7 @@ export class SignInService {
   }
 
   getUser(token: string): Observable<IUser> {
-    const url = `${API.Prefix}/${API.User}`;
+    const url = `${API.Prefix}/${API.UserData}`;
     const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } };
 
     return this.http.post<IUser>(url, null, options);

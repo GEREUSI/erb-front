@@ -8,6 +8,8 @@ export const getIsSignUpLoading = createSelector(getUserState, (state) => state.
 
 export const getIsSignInLoading = createSelector(getUserState, (state) => state.signInLoadingStatus.loading);
 
+export const getIsUserDataLoading = createSelector(getUserState, (state) => state.userDataLoadingStatus.loading);
+
 export const getSignUpHasErrors = createSelector(getUserState, (state) => !!state.signUpLoadingStatus.errors);
 
 export const getSignInHasErrors = createSelector(getUserState, (state) => !!state.signInLoadingStatus.errors);

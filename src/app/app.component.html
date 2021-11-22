@@ -1,5 +1,10 @@
 <app-header></app-header>
 <div class='h-100'>
-    <router-outlet></router-outlet>
+    <div *ngIf="isUserLoading$ | async; else dataRef" class="d-flex h-100 justify-content-center flex-grow-1">
+        <mat-spinner  class="align-self-center" [diameter]="30"></mat-spinner>
+    </div>
+    <ng-template #dataRef>
+        <router-outlet></router-outlet>
+    </ng-template>
 </div>
 <app-footer class="mt-auto"></app-footer>
