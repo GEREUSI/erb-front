@@ -11,18 +11,18 @@ import { map } from 'rxjs/operators';
 export class RoomsService {
   constructor(private http: HttpClient) {}
 
-  createRoom(userData: IRoom, userId: number, token: string): Observable<IRoom> {
+  createRoom(roomData: IRoom, userId: number, token: string): Observable<IRoom> {
     const url = `${API.Prefix}/user/${userId}/rooms`;
     const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } };
-    const body = JSON.stringify(userData);
+    const body = JSON.stringify(roomData);
 
     return this.http.post<ISingleRoomResponse>(url, body, options).pipe(map((roomResponse)=> roomResponse.room) );;
   }
 
-  updateRoom(userData: IRoom, userId: number, token: string): Observable<void> {
-    const url = `${API.Prefix}/user/${userId}/rooms`;
+  updateRoom(roomData: IRoom, userId: number, token: string): Observable<void> {
+    const url = `${API.Prefix}/user/${userId}/rooms/${roomData.id}`;
     const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } };
-    const body = JSON.stringify(userData);
+    const body = JSON.stringify(roomData);
 
     return this.http.patch<void>(url, body, options);
   }

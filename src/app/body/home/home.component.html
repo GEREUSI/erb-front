@@ -1,5 +1,5 @@
 <div class='container h-100'>
-    <div class='d-flex h-100 flex-column my-4'>
+    <div class='d-flex h-100 flex-column my-4 pb-5'>
         <div class="d-flex justify-content-between header mb-3">
             <h2 class="my-auto mx-2">Pabėgimo kambariai</h2>
             <button mat-icon-button class='btn' type='button' (click)="openSearchParamsModal()">
@@ -8,7 +8,15 @@
         </div>
         <mat-spinner *ngIf="isLoading; else dataRef" class="align-self-center" [diameter]="20"></mat-spinner>
         <ng-template #dataRef>
-            <app-room *ngFor="let room of rooms" [room]="room" class="mb-3"></app-room>
+            <div class="d-flex flex-column overflow-auto">
+                <app-room *ngFor="let room of rooms" [room]="room" class="mb-3"></app-room>
+                <app-room *ngFor="let room of rooms" [room]="room" class="mb-3"></app-room>
+                <app-room *ngFor="let room of rooms" [room]="room" class="mb-3"></app-room>
+                <app-room *ngFor="let room of rooms" [room]="room" class="mb-3"></app-room>
+                <app-room *ngFor="let room of rooms" [room]="room" class="mb-3"></app-room>
+                <app-room *ngFor="let room of rooms" [room]="room" class="mb-3"></app-room>
+                <app-room *ngFor="let room of rooms" [room]="room" class="mb-3"></app-room>
+            </div>
         </ng-template>
     </div>
 </div>

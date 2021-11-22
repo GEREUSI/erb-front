@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
+import { ROUTES } from 'src/app/shared/constants/routes.const';
 import { RoomType } from 'src/app/shared/models/room';
 import { RoomsService } from 'src/app/shared/services/rooms.service';
+import { go } from 'src/app/store/actions';
 import { getAuthenticatedUserId, getAuthenticatedUserToken } from 'src/app/store/selectors';
 
 @Component({
@@ -18,7 +21,7 @@ export class RoomCreateComponent implements OnInit {
   private userId: number;
   private userToken: string;
 
-  constructor(private formBuilder: FormBuilder, private roomsService: RoomsService, private store: Store) {}
+  constructor(private formBuilder: FormBuilder, private roomsService: RoomsService, private store: Store, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.roomForm = this.formBuilder.group(
@@ -42,9 +45,16 @@ export class RoomCreateComponent implements OnInit {
         this.userToken = token as string;
       this.roomsService.createRoom(this.roomForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
         this.isUpdating = false;
+        this.store.dispatch(go({path: ROUTES.Home}))
+        this.snackBar.open('Kambarys sukurtas', 'OK', {
+          duration: 3000
+        });
       },
-      () => {
+      (error) => {
         this.isUpdating = false;
+        this.snackBar.open(error.message, 'OK', {
+          duration: 3000
+        });
       }
       );
     })

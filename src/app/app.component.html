@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class='h-100'>
+<div class='body'>
     <div *ngIf="isUserLoading$ | async; else dataRef" class="d-flex h-100 justify-content-center flex-grow-1">
         <mat-spinner  class="align-self-center" [diameter]="30"></mat-spinner>
     </div>
