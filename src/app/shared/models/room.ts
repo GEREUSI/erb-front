@@ -8,6 +8,14 @@ export interface IRoom{
   typeId: RoomType;
 }
 
+export interface ISingleRoomResponse {
+  room: IRoom
+}
+
+export interface IRoomResponse {
+  rooms: IRoom[]
+}
+
 export interface IRoomSearchParams {
   roomType: string[]
 }

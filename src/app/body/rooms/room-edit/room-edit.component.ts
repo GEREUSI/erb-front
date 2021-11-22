@@ -45,7 +45,7 @@ export class RoomEditComponent implements OnInit {
   public onSubmit(): void {
     if (this.roomForm.valid) {
       this.isUpdating = true;
-      this.roomsService.createRoom(this.roomForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
+      this.roomsService.updateRoom(this.roomForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
         this.isUpdating = false;
       },
       () => {

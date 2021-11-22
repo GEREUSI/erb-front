@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { combineLatest } from 'rxjs';
 import { RoomType } from 'src/app/shared/models/room';
 import { RoomsService } from 'src/app/shared/services/rooms.service';
+import { getAuthenticatedUserId, getAuthenticatedUserToken } from 'src/app/store/selectors';
 
 @Component({
   selector: 'app-room-create',
@@ -15,7 +18,7 @@ export class RoomCreateComponent implements OnInit {
   private userId: number;
   private userToken: string;
 
-  constructor(private formBuilder: FormBuilder, private roomsService: RoomsService) {}
+  constructor(private formBuilder: FormBuilder, private roomsService: RoomsService, private store: Store) {}
 
   ngOnInit(): void {
     this.roomForm = this.formBuilder.group(
@@ -34,6 +37,9 @@ export class RoomCreateComponent implements OnInit {
   public onSubmit(): void {
     if (this.roomForm.valid) {
       this.isUpdating = true;
+      combineLatest([this.store.select(getAuthenticatedUserId), this.store.select(getAuthenticatedUserToken)]).subscribe(([id, token]) => {
+        this.userId = id as number;
+        this.userToken = token as string;
       this.roomsService.createRoom(this.roomForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
         this.isUpdating = false;
       },
@@ -41,6 +47,7 @@ export class RoomCreateComponent implements OnInit {
         this.isUpdating = false;
       }
       );
+    })
     }
   }
 }
