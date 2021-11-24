@@ -20,7 +20,7 @@ export class UserEffects {
     private signUpService: SignUpService,
     private signInService: SignInService,
     private userService: UserService
-  ) {}
+  ) { }
 
   public signUpUser$ = createEffect(
     () =>
@@ -30,7 +30,7 @@ export class UserEffects {
           this.signUpService.signUp(payload).subscribe(
             (signUpResponse: SignUpResponse) => {
               this.store.dispatch(signUpSuccess({ payload: signUpResponse }));
-              this.store.dispatch(go({ path: ROUTES.SignIn}));
+              this.store.dispatch(go({ path: ROUTES.SignIn }));
             },
             (errorResponse: HttpErrorResponse) => {
               this.store.dispatch(signUpFail({ errors: errorResponse.error.errors }));
@@ -67,14 +67,14 @@ export class UserEffects {
           this.signInService.signIn(payload).subscribe(
             (signInResponse: SignInResponse) => {
               this.signInService.getUser(signInResponse.token).subscribe((userData) => {
-                this.store.dispatch(signInSuccess({ payload: {...signInResponse, user: userData} }));
-                this.store.dispatch(go({ path: ROUTES.Home}));
+                this.store.dispatch(signInSuccess({ payload: { ...signInResponse, user: userData } }));
+                this.store.dispatch(go({ path: ROUTES.Home }));
                 localStorage.setItem(USER_TOKEN_KEY, signInResponse.token)
               },
-              () => {
-                this.store.dispatch(signInSuccess({ payload: signInResponse }));
-                this.store.dispatch(go({ path: ROUTES.Home}));
-              })              
+                () => {
+                  this.store.dispatch(signInSuccess({ payload: signInResponse }));
+                  this.store.dispatch(go({ path: ROUTES.Home }));
+                })
             },
             (errorResponse: HttpErrorResponse) => {
               this.store.dispatch(signInFail({ errors: errorResponse.error.errors }));
@@ -101,7 +101,7 @@ export class UserEffects {
       this.actions$.pipe(
         ofType(logOut),
         tap(() => {
-          localStorage.setItem(USER_TOKEN_KEY, '')          
+          localStorage.setItem(USER_TOKEN_KEY, '')
         })
       ),
     { dispatch: false }

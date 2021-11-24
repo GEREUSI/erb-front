@@ -32,10 +32,10 @@ export const signUpFail = createAction(UserActions.SignUpFail, props<{ errors: G
 
 export const logOut = createAction(UserActions.LogOut);
 
-export const setUserToken = createAction(UserActions.SetUserToken, props<{token: string}>());
+export const setUserToken = createAction(UserActions.SetUserToken, props<{ token: string }>());
 
 export const loadUserData = createAction(UserActions.LoadUserData, props<{ token: string }>());
 
-export const loadUserDataSuccess = createAction(UserActions.SignInSuccess, props<{ payload: IUser }>());
+export const loadUserDataSuccess = createAction(UserActions.LoadUserDataSuccess, props<{ payload: IUser }>());
 
-export const loadUserDataFail = createAction(UserActions.SignInFail, props<{ errors: GeneralError }>());
+export const loadUserDataFail = createAction(UserActions.LoadUserDataFail, props<{ errors: GeneralError }>());

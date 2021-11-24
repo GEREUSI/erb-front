@@ -98,7 +98,7 @@ const reducer: ActionReducer<State> = createReducer(
       loaded: false
     }
   })),
-  on(setUserToken, (state, {token }) => ({...state, token})),
+  on(setUserToken, (state, { token }) => ({ ...state, token })),
   on(logOut, () => initialState)
 );
 
