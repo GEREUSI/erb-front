@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators';
 import { IUserData } from 'src/app/shared/models/settings';
 import { UserType } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/shared/services/user.service';
+import { loadUserData } from 'src/app/store/actions';
 import { getAuthenticatedUserId, getAuthenticatedUserToken } from 'src/app/store/selectors/user.selectors';
 
 @Component({
@@ -22,7 +23,7 @@ export class SettingsComponent implements OnInit {
   private userToken: string;
   private userData: IUserData;
 
-  constructor(private formBuilder: FormBuilder, private store: Store, private userService: UserService) {}
+  constructor(private formBuilder: FormBuilder, private store: Store, private userService: UserService) { }
 
   ngOnInit(): void {
     this.isInitialLoading = true;
@@ -54,8 +55,8 @@ export class SettingsComponent implements OnInit {
 
 
     this.store.select(getAuthenticatedUserId).pipe(take(1)).subscribe(
-      (id)=> {
-        
+      (id) => {
+
       }
     )
   }
@@ -68,11 +69,12 @@ export class SettingsComponent implements OnInit {
     if (this.personalDataForm.valid) {
       this.isUpdating = true;
       this.userService.updateUserSettings(this.personalDataForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
+        this.store.dispatch(loadUserData({ token: this.userToken }));
         this.isUpdating = false;
       },
-      () => {
-        this.isUpdating = false;
-      }
+        () => {
+          this.isUpdating = false;
+        }
       );
     }
   }
