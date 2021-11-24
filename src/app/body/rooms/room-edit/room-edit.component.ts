@@ -23,11 +23,12 @@ export class RoomEditComponent implements OnInit {
   private userId: number;
   private userToken: string;
 
-  constructor(private formBuilder: FormBuilder, private roomsService: RoomsService, private route: ActivatedRoute, private store: Store, private snackBar: MatSnackBar) {}
+  constructor(private formBuilder: FormBuilder, private roomsService: RoomsService, private route: ActivatedRoute, private store: Store, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.roomForm = this.formBuilder.group(
       {
+        id: [null, [Validators.required]],
         title: [null, [Validators.required]],
         address: [null, [Validators.required]],
         size: [null, [Validators.required]],
@@ -50,17 +51,17 @@ export class RoomEditComponent implements OnInit {
       this.isUpdating = true;
       this.roomsService.updateRoom(this.roomForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
         this.isUpdating = false;
-        this.store.dispatch(go({path: ROUTES.Home}))
+        this.store.dispatch(go({ path: ROUTES.Home }))
         this.snackBar.open('Kambarys atnaujintas', 'OK', {
           duration: 3000
         });
       },
-      (error) => {
-        this.isUpdating = false;
-        this.snackBar.open(error.message, 'OK', {
-          duration: 3000
-        });
-      }
+        (error) => {
+          this.isUpdating = false;
+          this.snackBar.open(error.message, 'OK', {
+            duration: 3000
+          });
+        }
       );
     }
   }
