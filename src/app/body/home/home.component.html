@@ -9,7 +9,9 @@
         <mat-spinner *ngIf="isLoading; else dataRef" class="align-self-center" [diameter]="20"></mat-spinner>
         <ng-template #dataRef>
             <div class="d-flex flex-column overflow-auto">
-                <app-room *ngFor="let room of rooms" [room]="room" class="mb-3"></app-room>
+                <ng-container *ngFor="let room of rooms">
+                    <app-room *ngIf="isRoomValid(room)" [room]="room" class="mb-3"></app-room>
+                </ng-container>
             </div>
         </ng-template>
     </div>

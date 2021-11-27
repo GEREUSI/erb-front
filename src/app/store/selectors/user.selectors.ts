@@ -18,7 +18,7 @@ export const getSignUpErrors = createSelector(getUserState, (state) => state.sig
 
 export const getSignInErrors = createSelector(getUserState, (state) => state.signInLoadingStatus.errors?.message || '');
 
-export const getIsAuthenticatedUser = createSelector(getUserState, (state) => !!state.token);
+export const getIsAuthenticatedUser = createSelector(getUserState, (state) => !!state.token && !!state.user);
 
 export const getAuthenticatedUserId = createSelector(getUserState, (state) => state.user?.id);
 

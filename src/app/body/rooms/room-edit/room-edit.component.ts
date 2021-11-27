@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ROUTES } from 'src/app/shared/constants/routes.const';
-import { RoomType } from 'src/app/shared/models/room';
+import { IRoomReservation, RoomReservationStatus, RoomType } from 'src/app/shared/models/room';
 import { RoomsService } from 'src/app/shared/services/rooms.service';
 import { go } from 'src/app/store/actions';
 import { getAuthenticatedUserId, getAuthenticatedUserToken } from 'src/app/store/selectors';
@@ -18,10 +18,13 @@ import { getAuthenticatedUserId, getAuthenticatedUserToken } from 'src/app/store
 })
 export class RoomEditComponent implements OnInit {
   public readonly roomType = RoomType
+  public readonly roomReservationStatus = RoomReservationStatus
   public isUpdating = false;
   public roomForm: FormGroup;
+  public roomReservations: IRoomReservation[]
   private userId: number;
   private userToken: string;
+  private roomId: string;
 
   constructor(private formBuilder: FormBuilder, private roomsService: RoomsService, private route: ActivatedRoute, private store: Store, private snackBar: MatSnackBar) { }
 
@@ -42,11 +45,18 @@ export class RoomEditComponent implements OnInit {
     combineLatest([this.store.select(getAuthenticatedUserId), this.store.select(getAuthenticatedUserToken), this.route.params]).subscribe(([id, token, params]) => {
       this.userId = id as number;
       this.userToken = token as string;
-      this.roomsService.getRoom(params.id, this.userId, this.userToken).subscribe((room) => this.roomForm.patchValue(room))
+      this.roomId = params.id
+      this.loadData()
     })
   }
 
-  public onSubmit(): void {
+  updateReservation(reservationId: number, status: RoomReservationStatus) : void {
+    this.roomsService.updateReservationStatus(this.userToken, reservationId, status).subscribe(() => {
+      this.loadData()
+    })
+  }
+
+  onSubmit(): void {
     if (this.roomForm.valid) {
       this.isUpdating = true;
       this.roomsService.updateRoom(this.roomForm.getRawValue(), this.userId, this.userToken).subscribe(() => {
@@ -64,6 +74,11 @@ export class RoomEditComponent implements OnInit {
         }
       );
     }
+  }
+
+  private loadData(): void {
+    this.roomsService.getUserRoom(this.roomId, this.userId, this.userToken).subscribe((room) => this.roomForm.patchValue(room))
+    this.roomsService.getUserRoomReservations(this.roomId, this.userToken).subscribe((roomReservations) => this.roomReservations = roomReservations)
   }
 }
 

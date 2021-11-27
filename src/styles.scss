@@ -13,3 +13,9 @@ body {
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+.cdk-overlay-container {
+  z-index: 1100; // conflicts with modal
+}

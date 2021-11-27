@@ -7,5 +7,6 @@ export enum ROUTES {
   RoomCreate = 'room/create',
   RoomEdit = 'room/edit/:id',
   RoomEditRedirect = 'room/edit',
-  UserRooms = 'rooms'
+  UserRooms = 'rooms',
+  RoomView = 'rooms/:id',
 }

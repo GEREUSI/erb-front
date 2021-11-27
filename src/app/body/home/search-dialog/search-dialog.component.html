@@ -4,6 +4,13 @@
   <div class="d-flex flex-column">
     <mat-slide-toggle class="mb-2" *ngFor="let roomType of roomTypes" [formControlName]="roomType">{{getRoomTypeName(roomType)}}</mat-slide-toggle>
   </div>
+  <h3 class="mb-1">Įvertinimai:</h3>
+  <label for="Nuo">Nuo</label>
+  <input class='form-control' id='Nuo' type='number' min="1" max="5" required formControlName='ratingFrom'>
+  <div class="my-1">
+    <label for="Iki">Iki</label>
+    <input class='form-control' id='Iki' type='number' min="1" max="5" required formControlName='ratingTo'>
+  </div>
 </form>
 <div mat-dialog-actions>
   <button mat-button class="btn btn-secondary" (click)="onNoClick()">Atšaukti</button>

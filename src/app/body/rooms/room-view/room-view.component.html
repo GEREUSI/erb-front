@@ -1,0 +1,70 @@
+<div class='px-5 h-100 overflow-auto'>
+    <div class='d-flex h-100 flex-row justify-content-between'>
+        <div *ngIf="isLoading; else dataRef" class="d-flex justify-content-center h-100 w-100">
+            <mat-spinner class="align-self-center" [diameter]="20"></mat-spinner>
+        </div>
+        <ng-template #dataRef>
+            <div class="col-6"></div>
+            <div class="d-flex h-100 flex-column my-4 col-6">
+                <div class="d-flex flex-row justify-content-between">
+                    <div>
+                        <span class="mb-0"><span class="text-capitalize h3">{{room.title}}</span><small> ({{getFormattedRating(room.avgRate)}})</small></span>             
+                        <h3 class="text-capitalize mb-0">{{room.address}}</h3>    
+                        <h3 class="text-capitalize">{{room.size}}</h3>    
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex flex-column justify-content-end">
+                            <h3 >{{getTypeName(room.typeId)}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <p class="my-3">{{room.description}}</p>
+                <ng-container *ngIf="isAuthenticatedUser$| async">
+                    <mat-divider></mat-divider>
+                        <div class="my-3">
+                            <h2>Įvertinti kambarį</h2>
+                            <div class="d-flex justify-content-between">
+                                <div class="col-6">
+                                    <label for="Balas">Balas</label>
+                                    <input class='form-control' id='Balas' pattern="\d+" type='number' min="1" max="5" required [formControl]='ratingFormControl'>
+                                </div>
+                                <div>
+                                    <button class='btn btn-success btn-sm mt-3 align-self-end' type='button' [disabled]="ratingFormControl.invalid" (click)="saveRating()">
+                                        <h2 class="m-0">Įvertinti</h2>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <mat-divider></mat-divider>
+                    <div class="my-3">
+                        <h2>Rezervuoti kambarį</h2>
+                        <div class="d-flex flex-column">
+                            <div class="d-flex flex-row">
+                                <ngb-datepicker 
+                                    class="col-6"
+                                    [minDate]="minDate"
+                                    [maxDate]="{year: 2025, month: 12, day: 31}"
+                                    [markDisabled]="isDisabled"
+                                    [(ngModel)]="selectedDate">
+                                </ngb-datepicker>
+                                <div *ngIf="selectedDate?.day" class="d-flex flex-wrap ml-1">
+                                    <button 
+                                    *ngFor="let time of defaultTimes"
+                                    class='btn btn-sm m-2' 
+                                    type='button' 
+                                    [class.btn-success]="!isSelected(time) && !isReserved(time)"
+                                    [class.btn-primary]="isSelected(time)"
+                                    (click)="selectTime(time)">{{getFormattedTime(time)}}</button>
+                                </div>
+                            </div>
+                            <button class='btn btn-success btn-sm mt-3' type='button' [disabled]="!selectedDate?.day || !selectedTime" (click)="bookRoom()">
+                                <h2 class="m-0">Rezervuoti</h2>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-template>
+    </div>
+</div>

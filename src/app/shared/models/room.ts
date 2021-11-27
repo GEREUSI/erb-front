@@ -6,6 +6,13 @@ export interface IRoom{
   description: string;
   price: number;
   typeId: RoomType;
+  avgRate: string;
+}
+
+export interface IRoomReservation{
+  id: number;
+  reservation_date: string;
+  status: RoomReservationStatus
 }
 
 export interface ISingleRoomResponse {
@@ -17,11 +24,29 @@ export interface IRoomResponse {
 }
 
 export interface IRoomSearchParams {
-  roomType: string[]
+  roomType: string[];
+  ratingFrom?: number;
+  ratingTo?: number
 }
 
 export enum RoomType {
   Scare = 'Scare',
   Action = 'Action',
   Puzzle = 'Puzzle'
+}
+
+export enum RoomReservationStatus {
+  InProgress = 'in_progress',
+  Cancelled = 'canceled',
+  Confirmed = 'confirmed'
+}
+
+export interface IRoomRateParams {
+  user_id: number,
+  rate: number
+}
+
+export interface IRoomReserveParams {
+  user_id: number,
+  reservation_date: string
 }

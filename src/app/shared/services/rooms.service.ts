@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API } from '../constants/api.const';
 import { Observable } from 'rxjs';
-import { IRoom, IRoomResponse, IRoomSearchParams, ISingleRoomResponse } from '../models/room';
+import { IRoom, IRoomRateParams, IRoomReservation, IRoomReserveParams, IRoomResponse, IRoomSearchParams, ISingleRoomResponse, RoomReservationStatus } from '../models/room';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class RoomsService {
     return this.http.patch<void>(url, body, options);
   }
 
-  getRoom(roomId: string, userId: number, token: string): Observable<IRoom> {
+  getUserRoom(roomId: string, userId: number, token: string): Observable<IRoom> {
     const url = `${API.Prefix}/user/${userId}/rooms/${roomId}`;
     const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } };
 
@@ -47,5 +47,47 @@ export class RoomsService {
     const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }, params: searchParams as unknown as HttpParams };
     
     return this.http.get<IRoomResponse>(url, options).pipe(map((rooms)=> rooms.rooms) );;
+  }
+
+  getRoom(roomId: number): Observable<IRoom> {
+    const url = `${API.Prefix}/room/${roomId}`;
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json'} };
+
+    return this.http.get<IRoom>(url, options);
+  }
+
+  rateRoom(token: string, roomId: number, body: IRoomRateParams): Observable<void> {
+    const url = `${API.Prefix}/room/${roomId}/rate`;
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }};
+    
+    return this.http.post<void>(url, body, options);
+  }
+
+  bookRoom(token: string, roomId: number, body: IRoomReserveParams): Observable<void> {
+    const url = `${API.Prefix}/room/${roomId}/reserve`;
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }};
+    
+    return this.http.post<void>(url, body, options);
+  }
+
+  getUserRoomReservations(roomId: string, token: string): Observable<IRoomReservation[]> {
+    const url = `${API.Prefix}/room/${roomId}/reservations`;
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }};
+
+    return this.http.get<IRoomReservation[]>(url, options);
+  }
+
+  getReservations(token: string, roomId: string): Observable<IRoomReservation[]> {
+    const url = `${API.Prefix}/room/${roomId}/booked`;
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } };
+
+    return this.http.get<IRoomReservation[]>(url, options);
+  }
+
+  updateReservationStatus(token: string, reservationId: number, status: RoomReservationStatus): Observable<void> {
+    const url = `${API.Prefix}/user/reservations/${reservationId}`;
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }};
+    
+    return this.http.post<void>(url, {status}, options);
   }
 }

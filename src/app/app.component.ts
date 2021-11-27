@@ -11,14 +11,14 @@ import { getIsUserDataLoading } from './store/selectors';
 })
 export class AppComponent implements OnInit {
   public isUserLoading$ = this.store.select(getIsUserDataLoading);
+  public token = localStorage.getItem(USER_TOKEN_KEY) as string
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    const token = localStorage.getItem(USER_TOKEN_KEY) as string
-    if(token){
-      this.store.dispatch(setUserToken({ token }))
-      this.store.dispatch(loadUserData({token}))  
+    if(this.token){
+      this.store.dispatch(setUserToken({ token: this.token }))
+      this.store.dispatch(loadUserData({ token: this.token }))  
     }
   }
 }

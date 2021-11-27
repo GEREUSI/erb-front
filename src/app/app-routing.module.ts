@@ -10,15 +10,17 @@ import { ROUTES } from './shared/constants/routes.const';
 import { AuthGuard } from './shared/guards/authenticated-user.guard';
 import { UnauthenticatedGuard } from './shared/guards/unauthenticated-user.guard';
 import { UserRoomsComponent } from './body/rooms/user-rooms/user-rooms.component';
+import { RoomViewComponent } from './body/rooms/room-view/room-view.component';
 
 const routes: Routes = [
   { path: ROUTES.SignIn, component: SignInComponent, canActivate: [UnauthenticatedGuard] },
   { path: ROUTES.SignUp, component: SignUpComponent, canActivate: [UnauthenticatedGuard] },
   { path: ROUTES.Settings, component: SettingsComponent, canActivate: [AuthGuard] },
   { path: ROUTES.Home, component: HomeComponent },
-  { path: ROUTES.RoomCreate, component: RoomCreateComponent },
-  { path: ROUTES.RoomEdit, component: RoomEditComponent },
-  { path: ROUTES.UserRooms, component: UserRoomsComponent },
+  { path: ROUTES.RoomCreate, component: RoomCreateComponent, canActivate: [AuthGuard] },
+  { path: ROUTES.RoomEdit, component: RoomEditComponent, canActivate: [AuthGuard] },
+  { path: ROUTES.UserRooms, component: UserRoomsComponent, canActivate: [AuthGuard] },
+  { path: ROUTES.RoomView, component: RoomViewComponent},
   { path: '', redirectTo: ROUTES.HomeRedirect, pathMatch: 'full' },
   { path: '**', redirectTo: ROUTES.HomeRedirect },
 ];

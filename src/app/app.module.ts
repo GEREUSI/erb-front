@@ -61,8 +61,10 @@ import { RoomCreateComponent } from './body/rooms/room-create/room-create.compon
 import { RoomEditComponent } from './body/rooms/room-edit/room-edit.component';
 import { UserRoomsComponent } from './body/rooms/user-rooms/user-rooms.component';
 import { RoomComponent } from './body/rooms/room/room.component';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltipModule, NgbModule, NgbDropdownModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchDialogComponent } from './body/home/search-dialog/search-dialog.component';
+import { RoomViewComponent } from './body/rooms/room-view/room-view.component';
+import { CommonModule } from '@angular/common';
 
 const angularMaterialImports = [
   MatAutocompleteModule,
@@ -100,6 +102,7 @@ const angularMaterialImports = [
   MatToolbarModule,
   MatTooltipModule,
   MatTreeModule,
+  MatDividerModule,
   NgbTooltipModule
 ];
 
@@ -119,7 +122,8 @@ const angularMaterialImports = [
     RoomEditComponent,
     UserRoomsComponent,
     RoomComponent,
-    SearchDialogComponent
+    SearchDialogComponent,
+    RoomViewComponent
   ],
   imports: [
     BrowserModule,
@@ -135,6 +139,10 @@ const angularMaterialImports = [
       maxAge: 25,
     }),
     ...angularMaterialImports,
+    NgbDropdownModule,
+    NgbDatepickerModule,
+    CommonModule,
+    NgbModule
   ],
   exports: [...angularMaterialImports],
   providers: [],
