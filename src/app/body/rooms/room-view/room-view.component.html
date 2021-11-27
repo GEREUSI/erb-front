@@ -55,10 +55,12 @@
                                     type='button' 
                                     [class.btn-success]="!isSelected(time) && !isReserved(time)"
                                     [class.btn-primary]="isSelected(time)"
+                                    [class.btn-danger]="!isSelected(time) && isReserved(time)"
+                                    [disabled]="isReserved(time)"
                                     (click)="selectTime(time)">{{getFormattedTime(time)}}</button>
                                 </div>
                             </div>
-                            <button class='btn btn-success btn-sm mt-3' type='button' [disabled]="!selectedDate?.day || !selectedTime" (click)="bookRoom()">
+                            <button class='btn btn-success btn-sm mt-3' type='button' [disabled]="!selectedDate?.day || !selectedTime || isReserved(selectedTime)" (click)="bookRoom()">
                                 <h2 class="m-0">Rezervuoti</h2>
                             </button>
                         </div>

@@ -84,7 +84,9 @@ export class RoomViewComponent implements OnInit {
   }
 
   selectTime(time: {hour: number; minutes: number}): void {
-    this.selectedTime = time
+    if(!this.isReserved(time)){
+      this.selectedTime = time
+    }
   }
 
   private loadData(): void {
