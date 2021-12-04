@@ -77,6 +77,13 @@ export class RoomsService {
     return this.http.get<IRoomReservation[]>(url, options);
   }
 
+  getUserReservations(token: string, userId: number): Observable<IRoomReservation[]> {
+    const url = `${API.Prefix}/user/${userId}/reservations`;
+    const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }};
+
+    return this.http.get<IRoomReservation[]>(url, options);
+  }
+
   getReservations(token: string, roomId: string): Observable<IRoomReservation[]> {
     const url = `${API.Prefix}/room/${roomId}/booked`;
     const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` } };
@@ -89,5 +96,17 @@ export class RoomsService {
     const options = { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }};
     
     return this.http.post<void>(url, {status}, options);
+  }
+  
+  exportRoomReservations(token: string, roomId: string): void {
+    const url = `${API.Prefix}/room/${roomId}/booked/export`;
+
+    window.open(url, '_self');
+  }
+
+  exportUserReservations(token: string, userId: number): void {
+    const url = `${API.Prefix}/user/${userId}/reservations/export`;
+
+    window.open(url, '_self');
   }
 }

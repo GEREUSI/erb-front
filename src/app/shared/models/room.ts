@@ -1,3 +1,5 @@
+import { IUser } from "./user";
+
 export interface IRoom{
   id?: number;
   title: string;
@@ -13,6 +15,8 @@ export interface IRoomReservation{
   id: number;
   reservation_date: string;
   status: RoomReservationStatus
+  user?: IUser;
+  room?: IRoom;
 }
 
 export interface ISingleRoomResponse {

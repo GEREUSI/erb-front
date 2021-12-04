@@ -34,29 +34,38 @@
                     </div>
                     <mat-divider></mat-divider>
                     <div class="my-3">
-                        <h2>Rezervacijos:</h2>
+                        <div class="d-flex flex-row justify-content-between">
+                            <h2>Rezervacijos:</h2>
+                            <button mat-icon-button type="button" ngbTooltip="Eksportuoti visas rezervacijas" (click)="exportAllReservations()"><mat-icon>cloud_download</mat-icon></button>
+                        </div>
                         <div class="d-flex flex-column">
-                            <ng-container *ngFor="let reservation of roomReservations">
-                                <div *ngIf="reservation.status === roomReservationStatus.InProgress" class="d-flex flex-row justify-content-between reservation">
-                                    <span class="my-auto">{{reservation.reservation_date}}</span>
+                            <ng-container *ngFor="let reservation of inProgressRoomReservations">
+                                <div class="d-flex flex-row justify-content-between reservation">
+                                    <span class="my-auto">{{reservation.reservation_date}} ({{reservation.user?.username}})</span>
                                     <div class="d-flex flex-row">
                                         <button type='button' mat-icon-button (click)="updateReservation(reservation.id, roomReservationStatus.Confirmed)"><mat-icon>check_circle_outline</mat-icon></button>
                                         <button type='button' mat-icon-button (click)="updateReservation(reservation.id, roomReservationStatus.Cancelled)"><mat-icon>highlight_off</mat-icon></button>
                                     </div>
                                 </div>
                             </ng-container>
+                            <div *ngIf="inProgressRoomReservations.length === 0" class="reservation">
+                                <span class="my-auto text-muted">Nėra busimų nepatvirtintų rezervacijų</span>
+                            </div>
                         </div>
                     </div>
                     <mat-divider></mat-divider>
                     <div class="my-3">
                         <h2>Patvirtintos rezervacijos:</h2>
                         <div class="d-flex flex-column">
-                            <ng-container *ngFor="let reservation of roomReservations">
-                                <div *ngIf="reservation.status === roomReservationStatus.Confirmed" class="d-flex flex-row justify-content-between reservation">
-                                    <span class="my-auto">{{reservation.reservation_date}}</span>
+                            <ng-container *ngFor="let reservation of confirmedRoomReservations">
+                                <div class="d-flex flex-row justify-content-between reservation">
+                                    <span class="my-auto">{{reservation.reservation_date}} ({{reservation.user?.username}})</span>
                                     <button type='button' mat-icon-button (click)="updateReservation(reservation.id, roomReservationStatus.Cancelled)"><mat-icon>highlight_off</mat-icon></button>
                                 </div>
                             </ng-container>
+                            <div *ngIf="confirmedRoomReservations.length === 0" class="reservation">
+                                <span class="my-auto text-muted">Nėra busimų patvirtintų rezervacijų</span>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { ROUTES } from 'src/app/shared/constants/routes.const';
 import { IRoomReservation, RoomReservationStatus, RoomType } from 'src/app/shared/models/room';
 import { RoomsService } from 'src/app/shared/services/rooms.service';
@@ -21,7 +21,8 @@ export class RoomEditComponent implements OnInit {
   public readonly roomReservationStatus = RoomReservationStatus
   public isUpdating = false;
   public roomForm: FormGroup;
-  public roomReservations: IRoomReservation[]
+  public inProgressRoomReservations: IRoomReservation[]
+  public confirmedRoomReservations: IRoomReservation[]
   private userId: number;
   private userToken: string;
   private roomId: string;
@@ -76,9 +77,20 @@ export class RoomEditComponent implements OnInit {
     }
   }
 
+  exportAllReservations(): void {
+    this.roomsService.exportRoomReservations(this.userToken, this.roomId)
+  }
+
   private loadData(): void {
     this.roomsService.getUserRoom(this.roomId, this.userId, this.userToken).subscribe((room) => this.roomForm.patchValue(room))
-    this.roomsService.getUserRoomReservations(this.roomId, this.userToken).subscribe((roomReservations) => this.roomReservations = roomReservations)
+    const currentDate = new Date();
+    this.roomsService.getUserRoomReservations(this.roomId, this.userToken).pipe(
+      map((roomReservations) => 
+      roomReservations.filter((roomReservation) => new Date(roomReservation.reservation_date) > new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() ))))
+      .subscribe((roomReservations) => {
+        this.inProgressRoomReservations = roomReservations.filter((reservation) => reservation.status === RoomReservationStatus.InProgress)
+        this.confirmedRoomReservations = roomReservations.filter((reservation) => reservation.status === RoomReservationStatus.Confirmed)
+      })
   }
 }
 

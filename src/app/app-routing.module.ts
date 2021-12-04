@@ -11,6 +11,7 @@ import { AuthGuard } from './shared/guards/authenticated-user.guard';
 import { UnauthenticatedGuard } from './shared/guards/unauthenticated-user.guard';
 import { UserRoomsComponent } from './body/rooms/user-rooms/user-rooms.component';
 import { RoomViewComponent } from './body/rooms/room-view/room-view.component';
+import { ReservationsComponent } from './body/reservations/reservations.component';
 
 const routes: Routes = [
   { path: ROUTES.SignIn, component: SignInComponent, canActivate: [UnauthenticatedGuard] },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: ROUTES.RoomCreate, component: RoomCreateComponent, canActivate: [AuthGuard] },
   { path: ROUTES.RoomEdit, component: RoomEditComponent, canActivate: [AuthGuard] },
   { path: ROUTES.UserRooms, component: UserRoomsComponent, canActivate: [AuthGuard] },
+  { path: ROUTES.Reservations, component: ReservationsComponent, canActivate: [AuthGuard] },
   { path: ROUTES.RoomView, component: RoomViewComponent},
   { path: '', redirectTo: ROUTES.HomeRedirect, pathMatch: 'full' },
   { path: '**', redirectTo: ROUTES.HomeRedirect },

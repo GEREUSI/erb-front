@@ -1,0 +1,27 @@
+<div class='px-5 h-100 overflow-auto'>
+    <div class='d-flex h-100 flex-row justify-content-between'>
+        <div *ngIf="isLoading; else dataRef" class="d-flex justify-content-center h-100 w-100">
+            <mat-spinner class="align-self-center" [diameter]="20"></mat-spinner>
+        </div>
+        <ng-template #dataRef>
+            <div class="d-flex h-100 w-100 flex-column my-4">
+                <div class="d-flex flex-row justify-content-between">
+                    <h2>Mano rezervacijos:</h2>
+                    <button mat-icon-button *ngIf="reservations.length !== 0" type="button" ngbTooltip="Eksportuoti visas rezervacijas" (click)="exportAllReservations()"><mat-icon>cloud_download</mat-icon></button>
+                </div>
+                <div *ngFor="let reservation of reservations" class="d-flex flex-row  justify-content-between reservation">
+                    <span class="my-auto">{{reservation.room?.title}} ({{reservation.reservation_date}})</span>
+                    
+                    <span class="badge my-auto"
+                    [class.alert-primary]="reservation.status === roomReservationStatus.InProgress"
+                    [class.alert-success]="reservation.status === roomReservationStatus.Confirmed"
+                    [class.alert-danger]="reservation.status === roomReservationStatus.Cancelled"
+                    >{{getStatusName(reservation.status)}}</span>
+                </div>
+                <div *ngIf="reservations.length === 0" class="reservation text-center">
+                    <h1 class="my-auto text-muted">Nėra rezervacijų</h1>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>

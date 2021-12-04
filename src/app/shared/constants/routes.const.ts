@@ -9,4 +9,5 @@ export enum ROUTES {
   RoomEditRedirect = 'room/edit',
   UserRooms = 'rooms',
   RoomView = 'rooms/:id',
+  Reservations = 'reservations',
 }

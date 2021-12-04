@@ -35,6 +35,10 @@ export class HeaderComponent {
     this.store.dispatch(go({ path: ROUTES.UserRooms}))
   }
 
+  public goToReservations(): void {
+    this.store.dispatch(go({ path: ROUTES.Reservations}))
+  }
+
   public logOut(): void {
     this.store.dispatch(logOut());
     this.store.dispatch(go({ path: ROUTES.Home }));

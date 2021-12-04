@@ -65,6 +65,7 @@ import { NgbTooltipModule, NgbModule, NgbDropdownModule, NgbDatepickerModule } f
 import { SearchDialogComponent } from './body/home/search-dialog/search-dialog.component';
 import { RoomViewComponent } from './body/rooms/room-view/room-view.component';
 import { CommonModule } from '@angular/common';
+import { ReservationsComponent } from './body/reservations/reservations.component';
 
 const angularMaterialImports = [
   MatAutocompleteModule,
@@ -123,7 +124,8 @@ const angularMaterialImports = [
     UserRoomsComponent,
     RoomComponent,
     SearchDialogComponent,
-    RoomViewComponent
+    RoomViewComponent,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule,

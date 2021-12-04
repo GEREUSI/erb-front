@@ -3,7 +3,8 @@
     <span class="spacer"></span>
     <button mat-raised-button *ngIf="!(isAuthenticatedUser$ | async)" class="mx-1" (click)="goToSignIn()">Prisijungti</button>
     <button mat-raised-button *ngIf="!(isAuthenticatedUser$ | async)" color="primary" (click)="goToSignUp()">Registruotis</button>
-    <button mat-icon-button *ngIf="(isAuthenticatedUser$ | async)" class="mx-2" (click)="goToSettings()"><mat-icon aria-hidden="false" aria-label="Example home icon">settings</mat-icon></button>
-    <button mat-raised-button *ngIf="(isAuthenticatedUser$ | async) && (isRenter$ | async)" class="mx-2" color="secondary" (click)="goToUserRooms()">Kambariai</button>
-    <button mat-raised-button *ngIf="(isAuthenticatedUser$ | async)" color="primary" (click)="logOut()">Atsijungti</button>
+    <button mat-icon-button *ngIf="(isAuthenticatedUser$ | async)" class="mx-1" (click)="goToSettings()"><mat-icon aria-hidden="false" aria-label="Example home icon">settings</mat-icon></button>
+    <button mat-raised-button *ngIf="(isAuthenticatedUser$ | async)" class="mx-1" color="secondary" (click)="goToReservations()">Rezervacijos</button>
+    <button mat-raised-button *ngIf="(isAuthenticatedUser$ | async) && (isRenter$ | async)" class="mx-1" color="secondary" (click)="goToUserRooms()">Kambariai</button>
+    <button mat-raised-button *ngIf="(isAuthenticatedUser$ | async)" class="mx-1" color="primary" (click)="logOut()">Atsijungti</button>
 </mat-toolbar>
